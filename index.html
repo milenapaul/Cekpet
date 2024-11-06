@@ -29,14 +29,43 @@
         transition: visibility 0s, opacity 0.5s ease;
       }
       #modal.show { visibility: visible; opacity: 1; }
-      #modalContent { background: transparent; text-align: center; color: white; max-width: 600px; padding: 20px; }
-      .checkbox-container { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+      
+        #modalContent {
+  background: transparent;
+  text-align: center;
+  color: white;
+  max-width: 600px;
+  padding: 20px;
+  line-height: 1.6; /* Add spacing between lines */
+}
+
+.checkbox-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Increased gap for breathing room */
+  margin-bottom: 30px; /* More space below checkboxes */
+}
       #terms { display: none; background-color: white; color: black; padding: 10px; max-height: 200px; overflow-y: auto; }
-      button { background-color: transparent; color: white; border: 2px solid white; padding: 10px 20px; transition: background-color 0.3s; cursor: pointer; }
+      button { background-color: transparent; color: white; border: 2px solid white; padding: 10px 20px; transition: background-color 0.3s; cursor: pointer; width: 100%; }
       button:hover { background-color: white; animation: colorCycle 1s infinite; }
       @keyframes colorCycle { 0% { color: #39ff14; } 33% { color: #ff00dc; } 66% { color: #0000ff; } 100% { color: #39ff14; } }
-      #secretForm { display: none; flex-direction: column; }
-      input[type="text"] { width: 100%; padding: 10px; background: transparent; color: white; border: 2px solid white; }
+      #secretForm {
+  display: none;
+  flex-direction: column;
+  gap: 20px; /* Add spacing between text box and submit button */
+}
+      input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+  border-radius: 0; /* Remove rounded corners */
+}
+
+        input::placeholder {
+  color: white; /* Ensure placeholder text is white */
+}
     </style>
 </head>
 <body>
