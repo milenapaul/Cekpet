@@ -29,6 +29,46 @@
         transition: visibility 0s, opacity 0.5s ease;
       }
       #modal.show { visibility: visible; opacity: 1; }
+      #modalContent { background: transparent; text-align: center; color: white; max-width: 600px; padding: 20px; }
+      .checkbox-container { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+      #terms { display: none; background-color: white; color: black; padding: 10px; max-height: 200px; overflow-y: auto; }
+      button { background-color: transparent; color: white; border: 2px solid white; padding: 10px 20px; transition: background-color 0.3s; cursor: pointer; }
+      button:hover { background-color: white; animation: colorCycle 1s infinite; }
+      @keyframes colorCycle { 0% { color: #39ff14; } 33% { color: #ff00dc; } 66% { color: #0000ff; } 100% { color: #39ff14; } }
+      #secretForm { display: none; flex-direction: column; }
+      input[type="text"] { width: 100%; padding: 10px; background: transparent; color: white; border: 2px solid white; }
+    </style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Submit Your Secret</title>
+    <style>
+      /* Basic styling for body, modal, terms, and buttons */
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        color: white;
+        background-color: #bb33dd;
+        text-align: center;
+        overflow: hidden;
+      }
+      #modal {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(10px);
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0s, opacity 0.5s ease;
+      }
+      #modal.show { visibility: visible; opacity: 1; }
       
         #modalContent {
   background: transparent;
@@ -109,7 +149,6 @@
 
                 <p>If you have questions, contact us at cekpet2024@gmail.com.</p>
             </div>
-            </div>
             <div class="checkbox-container">
                 <label><input type="checkbox" id="acceptTerms"> I accept the Terms and Conditions</label>
                 <label><input type="checkbox" id="rejectTerms"> I do not accept the Terms and Conditions</label>
@@ -126,7 +165,7 @@
     </div>
 
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbypULzMDnf57uUe9xHHNVTdhUql5ki68q0tJlbyLJV0l16BdHrOmv9hP8ejhMxyEnZf0Q/exec"; // Replace with your Google Apps Script Web App URL
+        const API_URL = "https://script.google.com/macros/s/AKfycbyxPLK2Z6BSrwvOOsba2x3ozzjE1F-GSnBgtSwk7zmVf4H7iVWC0Ity6HSilKj3VZn9fQ/exec"; // Replace with your Google Apps Script Web App URL
         const colors = ["#39FF14", "#ff00dc", "#0000FF"];
         document.body.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
         document.getElementById("lastUpdated").innerText = new Date().toLocaleString();
@@ -180,3 +219,4 @@
     </script>
 </body>
 </html>
+
