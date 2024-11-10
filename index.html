@@ -85,21 +85,58 @@
   gap: 20px; /* Increased gap for breathing room */
   margin-bottom: 30px; /* More space below checkboxes */
 }
-      #terms { display: none; background-color: white; color: black; padding: 10px; max-height: 200px; overflow-y: auto; }
-      button { background-color: transparent; color: white; border: 2px solid white; padding: 10px 20px; transition: background-color 0.3s; cursor: pointer; width: 100%; }
-      button:hover { background-color: white; animation: colorCycle 1s infinite; }
-      @keyframes colorCycle { 0% { color: #39ff14; } 33% { color: #ff00dc; } 66% { color: #0000ff; } 100% { color: #39ff14; } }
-      #secretForm {
+
+#terms {
   display: none;
+  background-color: white;
+  color: black;
+  padding: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+button {
+  background-color: transparent;
+  color: white;
+  border: 2px solid white;
+  padding: 10px; /* Ensure consistent padding with input */
+  cursor: pointer;
+  width: 100%; /* Make button take full width */
+  max-width: 400px; /* Set the desired maximum width */
+  transition: background-color 0.3s;
+  text-align: center;
+  font-size: 16px; /* Match font size with input */
+  box-sizing: border-box; /* Include padding and border in the total width */
+}
+
+button:hover {
+  background-color: white;
+  animation: colorCycle 1s infinite;
+}
+
+@keyframes colorCycle {
+  0% { color: #39ff14; }
+  33% { color: #ff00dc; }
+  66% { color: #0000ff; }
+  100% { color: #39ff14; }
+}
+
+#secretForm {
+  display: flex;
   flex-direction: column;
   gap: 20px; /* Add spacing between text box and submit button */
 }
-      input[type="text"] {
-  padding: 10px;
+
+input[type="text"] {
+  padding: 10px; /* Ensure consistent padding with button */
   background: transparent;
   color: white;
   border: 2px solid white;
-  border-radius: 0; /* Remove rounded corners */
+  max-width: 400px; /* Set the desired maximum width */
+  width: 100%; /* Make input take full width */
+  font-size: 16px; /* Match font size with button */
+  box-sizing: border-box; /* Include padding and border in the total width */
+  text-align: left; /* Center text in the input field */
 }
 
         input::placeholder {
