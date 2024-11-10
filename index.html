@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Submit Your Secret</title>
-    <style>
-      /* Basic styling for body, modal, terms, and buttons */
-      body {
+<style>
+    /* Basic styling for body, modal, terms, and buttons */
+    body {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -16,8 +11,11 @@
         background-color: #bb33dd;
         text-align: center;
         overflow: hidden;
-      }
-      #modal {
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    #modal {
         position: fixed;
         top: 0; left: 0; right: 0; bottom: 0;
         display: flex;
@@ -27,121 +25,123 @@
         visibility: hidden;
         opacity: 0;
         transition: visibility 0s, opacity 0.5s ease;
-      }
-      #modal.show { visibility: visible; opacity: 1; }
-      #modalContent { background: transparent; text-align: center; color: white; max-width: 600px; padding: 20px; }
-      .checkbox-container { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
-      #terms { display: none; background-color: white; color: black; padding: 10px; max-height: 200px; overflow-y: auto; }
-      button { background-color: transparent; color: white; border: 2px solid white; padding: 10px 20px; transition: background-color 0.3s; cursor: pointer; }
-      button:hover { background-color: white; animation: colorCycle 1s infinite; }
-      @keyframes colorCycle { 0% { color: #39ff14; } 33% { color: #ff00dc; } 66% { color: #0000ff; } 100% { color: #39ff14; } }
-      #secretForm { display: none; flex-direction: column; }
-      input[type="text"] { width: 100%; padding: 10px; background: transparent; color: white; border: 2px solid white; }
-    </style>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Submit Your Secret</title>
-    <style>
-      /* Basic styling for body, modal, terms, and buttons */
-      body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        font-family: Arial, sans-serif;
-        color: white;
-        background-color: #bb33dd;
+    }
+
+    #modal.show {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    #modalContent {
+        background: transparent;
         text-align: center;
-        overflow: hidden;
-      }
-      #modal {
-        position: fixed;
-        top: 0; left: 0; right: 0; bottom: 0;
+        color: white;
+        max-width: 600px;
+        padding: 20px;
+        line-height: 1.6;
+        box-sizing: border-box;
+    }
+
+    .checkbox-container {
         display: flex;
-        justify-content: center;
-        align-items: center;
-        backdrop-filter: blur(10px);
-        visibility: hidden;
-        opacity: 0;
-        transition: visibility 0s, opacity 0.5s ease;
-      }
-      #modal.show { visibility: visible; opacity: 1; }
-      
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    #terms {
+        display: none;
+        background-color: white;
+        color: black;
+        padding: 10px;
+        max-height: 200px;
+        overflow-y: auto;
+    }
+
+    button {
+        background-color: transparent;
+        color: white;
+        border: 2px solid white;
+        padding: 10px 20px;
+        cursor: pointer;
+        width: 100%;
+        max-width: 400px;
+        transition: background-color 0.3s;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+
+    button:hover {
+        background-color: white;
+        animation: colorCycle 1s infinite;
+    }
+
+    @keyframes colorCycle {
+        0% { color: #39ff14; }
+        33% { color: #ff00dc; }
+        66% { color: #0000ff; }
+        100% { color: #39ff14; }
+    }
+
+    #secretForm {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    input[type="text"] {
+        padding: 10px;
+        background: transparent;
+        color: white;
+        border: 2px solid white;
+        max-width: 400px;
+        width: 100%;
+        font-size: 16px;
+        box-sizing: border-box;
+        text-align: left;
+    }
+
+    input::placeholder {
+        color: white;
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 600px) {
+        body {
+            height: auto;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
         #modalContent {
-  background: transparent;
-  text-align: center;
-  color: white;
-  max-width: 600px;
-  padding: 20px;
-  line-height: 1.6; /* Add spacing between lines */
-}
+            max-width: 100%;
+            padding: 15px;
+            font-size: 14px;
+        }
 
-.checkbox-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px; /* Increased gap for breathing room */
-  margin-bottom: 30px; /* More space below checkboxes */
-}
+        button, input[type="text"] {
+            max-width: 100%;
+            font-size: 14px;
+            padding: 10px;
+        }
 
-#terms {
-  display: none;
-  background-color: white;
-  color: black;
-  padding: 10px;
-  max-height: 200px;
-  overflow-y: auto;
-}
+        .checkbox-container {
+            gap: 5px;
+        }
 
-button {
-  background-color: transparent;
-  color: white;
-  border: 2px solid white;
-  padding: 10px; /* Ensure consistent padding with input */
-  cursor: pointer;
-  width: 100%; /* Make button take full width */
-  max-width: 400px; /* Set the desired maximum width */
-  transition: background-color 0.3s;
-  text-align: center;
-  font-size: 16px; /* Match font size with input */
-  box-sizing: border-box; /* Include padding and border in the total width */
-}
+        #terms {
+            max-height: 150px;
+        }
 
-button:hover {
-  background-color: white;
-  animation: colorCycle 1s infinite;
-}
+        h2 {
+            font-size: 18px;
+        }
 
-@keyframes colorCycle {
-  0% { color: #39ff14; }
-  33% { color: #ff00dc; }
-  66% { color: #0000ff; }
-  100% { color: #39ff14; }
-}
-
-#secretForm {
-  display: flex;
-  flex-direction: column;
-  gap: 20px; /* Add spacing between text box and submit button */
-}
-
-input[type="text"] {
-  padding: 10px; /* Ensure consistent padding with button */
-  background: transparent;
-  color: white;
-  border: 2px solid white;
-  max-width: 400px; /* Set the desired maximum width */
-  width: 100%; /* Make input take full width */
-  font-size: 16px; /* Match font size with button */
-  box-sizing: border-box; /* Include padding and border in the total width */
-  text-align: left; /* Center text in the input field */
-}
-
-        input::placeholder {
-  color: white; /* Ensure placeholder text is white */
-}
+        p, h3 {
+            font-size: 14px;
+        }
+    }
+</style>
     </style>
 </head>
 <body>
