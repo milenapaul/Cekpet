@@ -6,160 +6,170 @@
     <style>
         /* Basic styling for body, modal, terms, and buttons */
         body {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 100vh;
-          margin: 0;
-          font-family: Arial, sans-serif;
-          color: white;
-          background-color: #bb33dd;
-          text-align: center;
-          overflow: hidden;
-          padding: 10px;
-          box-sizing: border-box;
-        }
-  
-        #modal {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          backdrop-filter: blur(10px);
-          visibility: hidden;
-          opacity: 0;
-          transition: visibility 0s, opacity 0.5s ease;
-        }
-  
-        #modal.show {
-          visibility: visible;
-          opacity: 1;
-        }
-  
-        #modalContent {
-          background: transparent;
-          text-align: left;
-          color: white;
-          max-width: 600px;
-          padding: 20px;
-          line-height: 1.6;
-          box-sizing: border-box;
-        }
-  
-        .checkbox-container {
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-          margin-bottom: 20px;
-        }
-  
-        #terms {
-          display: none;
-          background-color: white;
-          color: black;
-          padding: 10px;
-          max-height: 200px;
-          overflow-y: auto;
-        }
-  
-        button {
-          background-color: transparent;
-          color: white;
-          border: 2px solid white;
-          padding: 10px 20px;
-          cursor: pointer;
-          width: 100%;
-          max-width: 400px;
-          transition: background-color 0.3s;
-          font-size: 16px;
-          box-sizing: border-box;
-        }
-  
-        button:hover {
-          background-color: white;
-          animation: colorCycle 1s infinite;
-        }
-  
-        @keyframes colorCycle {
-          0% {
-            color: #39ff14;
-          }
-          33% {
-            color: #ff00dc;
-          }
-          66% {
-            color: #0000ff;
-          }
-          100% {
-            color: #39ff14;
-          }
-        }
-  
-        #secretForm {
-          display: flex;
-          flex-direction: column;
-          gap: 20px;
-        }
-  
-        input[type="text"] {
-          padding: 10px;
-          background: transparent;
-          color: white;
-          border: 2px solid white;
-          max-width: 400px;
-          width: 100%;
-          font-size: 16px;
-          box-sizing: border-box;
-          text-align: left;
-        }
-  
-        input::placeholder {
-          color: white;
-        }
-  
-        /* Mobile Styles */
-        @media (max-width: 600px) {
-          body {
-            height: auto;
-            overflow-y: auto;
-            padding: 20px;
-          }
-  
-          #modalContent {
-            max-width: 100%;
-            padding: 15px;
-            font-size: 14px;
-          }
-  
-          button,
-          input[type="text"] {
-            max-width: 100%;
-            font-size: 14px;
-            padding: 10px;
-          }
-  
-          .checkbox-container {
-            gap: 5px;
-          }
-  
-          #terms {
-            max-height: 150px;
-            text-align: left;
-          }
-  
-          h2 {
-            font-size: 18px;
-          }
-  
-          p,
-          h3 {
-            font-size: 14px;
-          }
-        }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: white;
+  background-color: #bb33dd;
+  text-align: center;
+  overflow: hidden;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+#modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.5s ease;
+}
+
+#modal.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+#modalContent {
+  background: transparent;
+  text-align: center;
+  color: white;
+  max-width: 90%;
+  padding: 20px;
+  line-height: 1.6;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.checkbox-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+#terms {
+  display: none;
+  background-color: white;
+  color: black;
+  padding: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+button {
+  background-color: transparent;
+  color: white;
+  border: 2px solid white;
+  padding: 10px 20px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 400px;
+  transition: background-color 0.3s;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+button:hover {
+  background-color: white;
+  animation: colorCycle 1s infinite;
+}
+
+@keyframes colorCycle {
+  0% {
+    color: #39ff14;
+  }
+  33% {
+    color: #ff00dc;
+  }
+  66% {
+    color: #0000ff;
+  }
+  100% {
+    color: #39ff14;
+  }
+}
+
+#secretForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+  max-width: 400px;
+  width: 100%;
+  font-size: 16px;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+input::placeholder {
+  color: white;
+}
+
+/* Mobile Styles */
+@media (max-width: 600px) {
+  body {
+    height: auto;
+    overflow-y: auto;
+    padding: 20px;
+  }
+
+  #modalContent {
+    max-width: 100%;
+    padding: 15px;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+  }
+
+  button,
+  input[type="text"] {
+    max-width: 100%;
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .checkbox-container {
+    gap: 5px;
+  }
+
+  #terms {
+    max-height: 150px;
+    text-align: left;
+  }
+
+  h2 {
+    font-size: 1.5em;
+  }
+
+  p,
+  h3 {
+    font-size: 1em;
+  }
+}
       </style>
     </head>
     <body>
@@ -290,7 +300,7 @@
       </div>
   
       <div id="secretForm">
-        <h1>Submit Your Secret</h1>
+        <h1>tell us a secret</h1>
         <input
           type="text"
           id="secretInput"
