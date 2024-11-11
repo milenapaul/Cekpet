@@ -312,55 +312,135 @@ input::placeholder {
       </div>
 
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbypULzMDnf57uUe9xHHNVTdhUql5ki68q0tJlbyLJV0l16BdHrOmv9hP8ejhMxyEnZf0Q/exec"; // Replace with your Google Apps Script Web App URL
-        const colors = ["#39FF14", "#ff00dc", "#0000FF"];
-        document.body.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        document.getElementById("lastUpdated").innerText = new Date().toLocaleString();
+const API_URL = "https://script.google.com/macros/s/AKfycbypULzMDnf57uUe9xHHNVTdhUql5ki68q0tJlbyLJV0l16BdHrOmv9hP8ejhMxyEnZf0Q/exec"; // Replace with your Google Apps Script Web App URL
+const colors = ["#39FF14", "#ff00dc", "#0000FF"];
+document.body.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+document.getElementById("lastUpdated").innerText = new Date().toLocaleString();
 
-        document.getElementById("toggleTerms").addEventListener("click", () => {
-            const terms = document.getElementById("terms");
-            const arrow = document.querySelector(".toggle-arrow");
-            terms.style.display = terms.style.display === "block" ? "none" : "block";
-            arrow.innerText = terms.style.display === "block" ? "▼" : "▲";
-        });
+document.getElementById("toggleTerms").addEventListener("click", () => {
+    const terms = document.getElementById("terms");
+    const arrow = document.querySelector(".toggle-arrow");
+    terms.style.display = terms.style.display === "block" ? "none" : "block";
+    arrow.innerText = terms.style.display === "block" ? "▼" : "▲";
+});
 
-        document.getElementById("acceptBtn").addEventListener("click", () => {
-            const accept = document.getElementById("acceptTerms").checked;
-            const reject = document.getElementById("rejectTerms").checked;
-            if (accept) {
-                document.getElementById("modal").classList.remove("show");
-                document.getElementById("secretForm").style.display = "flex";
-            } else if (reject) {
-                window.location.href = "jail.html";
-            } else {
-                alert("Please select an option to proceed.");
-            }
-        });
-
-        document.getElementById("submitBtn").addEventListener("click", () => {
-    const secret = document.getElementById("secretInput").value;
-    
-    if (secret) {
-        // Create URL-encoded form data
-        const formData = new URLSearchParams();
-        formData.append("secret", secret);
-
-        // Send the request to Google Apps Script Web App
-        fetch(API_URL, {
-            method: "POST",
-            body: formData // URL-encoded data
-        })
-        .then(response => response.json())
-        .then(responseData => {
-            document.getElementById("response").innerText = responseData.status === "Success" ? 
-                "Secret submitted! Thank you!" : "Error submitting your secret.";
-            document.getElementById("secretInput").value = ""; // Clear input
-        })
-        .catch(error => {
-            console.error("Fetch Error:", error);
-            document.getElementById("response").innerText = "There was an error submitting your secret.";
-        });
+document.getElementById("acceptBtn").addEventListener("click", () => {
+    const accept = document.getElementById("acceptTerms").checked;
+    const reject = document.getElementById("rejectTerms").checked;
+    if (accept) {
+        document.getElementById("modal").classList.remove("show");
+        document.getElementById("secretForm").style.display = "flex";
+    } else if (reject) {
+        window.location.href = "jail.html";
+    } else {
+        alert("Please select an option to proceed.");
     }
+});
+
+document.getElementById("submitBtn").addEventListener("click", () => {
+    const secret = document.getElementById("secretInput").value.trim().toLowerCase(); // Trim whitespace and convert to lowercase
+
+    // Map of specific inputs to custom rejection messages
+    const customResponses = {
+        "hello": "Hello! Can you tell me a secret?",
+        "hi": "hi :) Can you tell me a secret?",
+        "hii": "hii :) Can you tell me a secret?",
+        "hiii": "hiii :) Can you tell me a secret?",
+        "hiiii": "hiiii :) Can you tell me a secret?",
+        "hiiiii": "hiiiii :) Can you tell me a secret?",
+        "hiiiiii": "hiiiiii :) Can you tell me a secret?",
+        "hiiiiiii": "hiiiiiii :) Can you tell me a secret?",
+        "hiiiiiiii": "hiiiiiiii :| Can you tell me a secret?",
+        "hiiiiiiiii": "hiiiiiiiii :| Can you tell me a secret?",
+        "hiiiiiiiiii": "hiiiiiiiiii :| Can you tell me a secret?",
+        "hiiiiiiiiiii": "hiiiiiiiiiii :( Can you tell me a secret?",
+        "hiiiiiiiiiiii": "hiiiiiiiiiiii :( Can you tell me a secret?",
+        "hiiiiiiiiiiiiii": "hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii >:( Can you tell me a secret? fuck it, if you keep typing more i's ill let you submit it idc anymore.",
+        "what is this": "This is your chance to tell me a secret :)",
+        "hey": "heyoo :) Can you tell me a secret?",
+        "who": "Can you read?",
+        "what": "Can you read?",
+        "when": "NOW!",
+        "why": "..Because <3..",
+        "how": "I used a lot of chatgpt troubleshooting to make this lol.",
+        "a secret": "Wow real creative - tell me a real secret.",
+        "secret": "Seriously?",
+        "no": "Yes!",
+        "bet": "It's not a wager; it's a secret-sharing moment.",
+        "ok": "Okay what?",
+        "k": "K what?",
+        "yo": "whats up",
+        "whats up": "I'm good, can you tell me a secret though?",
+        "doing good": "nice",
+        "doin good": "nice",
+        "Im good": "good to hear",
+        "I'm good": "that's good.",
+        "yes": "Yes, and?",
+        "stfu": ":(",
+        "idgaf": ":'(",
+        "shut up": ":0",
+        "this is stupid": "Thats mean.",
+        "this is cool": "Thanks, can you submit a secret now? >:(",
+        "stupid": ":,(",
+        "youre stupid": ":,'(",
+        "ur stupid": ":,'(",
+        "sorry": "I'll only forgive you if you submit a real secret this time.",
+        "i dont want to": "Why are you here then?",
+        "i don't want to": "Why are you here then?",
+        "dumbass art student": "Where's your proof?",
+        "vcu arts type shit": "Yeah lol.",
+        "girl": "Girl, submit a secret.",
+        "boy": "Boy, submit a secret.",
+        "hi mimi": "AHHHH STOP BREAKING THE FOURTH WALL!!",
+        "who are you?": "Don't worry about it, tell me a secret. . <3",
+        "what are you?": "A trustworthy friend who really wants your secrets. :)",
+        "when are you?": "Now! :D",
+        "where are you?": "Behind you.",
+        "how are you?": "I'm doing alright, but I'd be doing better if you told me a secret...",
+        "who are you": "Don't worry about it, tell me a secret. . <3",
+        "what are you": "A trustworthy friend who really wants your secrets. :)",
+        "when are you": "Now! :D",
+        "where are you": "Behind you.",
+        "how are you": "I'm doing alright, but I'd be doing better if you told me a secret...",
+        "who are you.": "Don't worry about it, tell me a secret. . <3",
+        "what are you.": "A trustworthy friend who really wants your secrets. :)",
+        "when are you.": "Now! :D",
+        "where are you.": "Behind you.",
+        "how are you.": "I'm doing alright, but I'd be doing better if you told me a secret...",
+
+    };
+
+    // General restricted terms list
+    const restrictedTerms = ["","a","b","c","d","e","f","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",];
+
+    // Check for custom responses or restricted terms
+    if (customResponses[secret]) {
+        document.getElementById("response").innerText = customResponses[secret];
+        return; // Do not proceed with submission
+    } else if (restrictedTerms.includes(secret)) {
+        document.getElementById("response").innerText = "Hey! No cheating...tell us a real secret.";
+        return; // Do not proceed with submission
+    }
+
+    // Create URL-encoded form data
+    const formData = new URLSearchParams();
+    formData.append("secret", secret);
+
+    // Send the request to Google Apps Script Web App
+    fetch(API_URL, {
+        method: "POST",
+        body: formData // URL-encoded data
+    })
+    .then(response => response.json())
+    .then(responseData => {
+        document.getElementById("response").innerText = responseData.status === "Success" ? 
+            "Secret submitted! Thank you!" : "Error submitting your secret.";
+        document.getElementById("secretInput").value = ""; // Clear input
+    })
+    .catch(error => {
+        console.error("Fetch Error:", error);
+        document.getElementById("response").innerText = "There was an error submitting your secret.";
+    });
 });
 
     </script>
