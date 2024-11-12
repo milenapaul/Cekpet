@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jail Bars Page</title>
+    <title>Jail</title>
     <style>
         /* Base styling for the page to match the original site */
         body {
@@ -12,7 +12,7 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: Helvetica, Arial, sans-serif;
             color: white;
             background-color: black;
             text-align: center;
@@ -99,13 +99,23 @@
     <div id="jailBarsPage">
         <div id="jailBarsImage"></div>
         <button id="goBackButton" onclick="goBack()">Go Back</button>
+        
+        <!-- Slamming sound effect -->
+        <audio id="slamSound" src="metalpipe.mp3" preload="auto"></audio> <!-- Replace with your actual sound file -->
     </div>
 
     <script>
-        // Go back button functionality
+        // Function to go back to the previous page
         function goBack() {
-            window.history.back(); // Takes the user back to the previous page
+            window.history.back();
         }
+
+        // Play the slam sound as soon as the animation starts
+        window.onload = () => {
+            const slamSound = document.getElementById('slamSound');
+            slamSound.volume = 1.0; // Set to maximum volume
+            slamSound.play();
+        };
     </script>
 
 </body>
