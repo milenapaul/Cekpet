@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jail Bars Page</title>
+    <style>
+        /* Base styling for the page to match the original site */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: white;
+            background-color: #bb33dd;
+            text-align: center;
+            overflow: hidden;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: white;
+            font-family: 'Helvetica', sans-serif;
+        }
+
+        /* Jail bars animation styling */
+        #jailBarsPage {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            background-color: black;
+            overflow: hidden;
+        }
+
+        #jailBarsImage {
+            position: absolute;
+            top: -100%;
+            width: 100%;
+            height: 100vh;
+            background-image: url('jail-bars.png'); /* Replace with actual PNG file path */
+            background-size: cover;
+            animation: slamDown 1s ease-out forwards;
+        }
+
+        #goBackButton {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        #goBackButton:hover {
+            background-color: white;
+            color: black;
+        }
+
+        @keyframes slamDown {
+            0% {
+                top: -100%;
+            }
+            100% {
+                top: 0;
+            }
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 600px) {
+            body {
+                height: auto;
+                overflow-y: auto;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            #goBackButton {
+                font-size: 14px;
+                padding: 8px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Jail Bars Page -->
+    <div id="jailBarsPage">
+        <div id="jailBarsImage"></div>
+        <button id="goBackButton" onclick="goBack()">Go Back</button>
+    </div>
+
+    <script>
+        // Go back button functionality
+        function goBack() {
+            window.history.back(); // Takes the user back to the previous page
+        }
+    </script>
+
+</body>
+</html>
