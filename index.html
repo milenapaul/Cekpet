@@ -129,17 +129,6 @@ input::placeholder {
   color: white;
 }
 
-        /* Style for each trailing cursor dot */
-        .cursor-trail {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: #39ff14;  /* Greenish color for the cursor */
-            pointer-events: none; /* Ensure it doesn't block other interactions */
-            animation: fade 1s forwards;
-        }
-
 /* Mobile Styles */
 @media (max-width: 600px) {
   body {
@@ -679,29 +668,6 @@ document.getElementById("submitBtn").addEventListener("click", () => {
         console.error("Fetch Error:", error);
         document.getElementById("response").innerText = "There was an error submitting your secret.";
     });
-
-           // Track the mouse movements
-           let trailArray = [];
-        const maxTrails = 10;  // Max number of trailing cursors
-
-        document.body.addEventListener("mousemove", function (e) {
-            let cursorDot = document.createElement("div");
-            cursorDot.classList.add("cursor-trail");
-
-            // Set the initial position of the new cursor dot
-            cursorDot.style.left = `${e.clientX - 5}px`;
-            cursorDot.style.top = `${e.clientY - 5}px`;
-
-            // Append the dot to the body
-            document.body.appendChild(cursorDot);
-            trailArray.push(cursorDot);
-
-            // Limit the number of trailing dots
-            if (trailArray.length > maxTrails) {
-                const dotToRemove = trailArray.shift();
-                dotToRemove.remove();
-            }
-        });
 });
 
 
