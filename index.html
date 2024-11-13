@@ -9,34 +9,36 @@
     <style>
         /* Basic styling for body, modal, terms, and buttons */
         body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-  font-family: Arial, sans-serif;
-  color: white;
-  background-color: #bb33dd;
-  text-align: center;
-  overflow: hidden;
-  padding: 10px;
-  box-sizing: border-box;
-}
+          display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: white;
+            background-color: #bb33dd;
+            text-align: center;
+            overflow: hidden;
+            padding: 10px;
+            box-sizing: border-box;
+        }
 
-#modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  backdrop-filter: blur(10px);
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s, opacity 0.5s ease;
-}
+        #modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.5); /* Fallback for Safari */
+            backdrop-filter: blur(10px);
+            visibility: hidden;
+            opacity: 0;
+            will-change: opacity;
+            transition: visibility 0s, opacity 0.5s ease;
+        }
 
 #modal.show {
   visibility: visible;
@@ -315,10 +317,12 @@ input::placeholder {
       </div>
 
     <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbypULzMDnf57uUe9xHHNVTdhUql5ki68q0tJlbyLJV0l16BdHrOmv9hP8ejhMxyEnZf0Q/exec"; // Replace with your Google Apps Script Web App URL
-const colors = ["#ff5c00", "#ff00dc", "#0000FF", "#ed0057","#9d03fc"];
-document.body.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-document.getElementById("lastUpdated").innerText = new Date().toLocaleString();
+const API_URL = "https://script.google.com/macros/s/AKfycbypULzMDnf57uUe9xHHNVTdhUql5ki68q0tJlbyLJV0l16BdHrOmv9hP8ejhMxyEnZf0Q/exec";
+        const colors = ["#ff5c00", "#ff00dc", "#0000FF", "#ed0057", "#9d03fc"];
+        document.body.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        
+        document.getElementById("lastUpdated").innerText = new Date().toISOString().split("T")[0];
+
 
 document.getElementById("toggleTerms").addEventListener("click", () => {
     const terms = document.getElementById("terms");
