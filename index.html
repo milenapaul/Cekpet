@@ -24,21 +24,20 @@
         }
 
         #modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: rgba(0, 0, 0, 0.5); /* Fallback for Safari */
-            backdrop-filter: blur(10px);
-            visibility: hidden;
-            opacity: 0;
-            will-change: opacity;
-            transition: visibility 0s, opacity 0.5s ease;
-        }
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0000ff; /* Opaque background matching the website */
+    visibility: hidden;
+    opacity: 0;
+    will-change: opacity;
+    transition: visibility 0s, opacity 0.5s ease;
+}
 
 #modal.show {
   visibility: visible;
