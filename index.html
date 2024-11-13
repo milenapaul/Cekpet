@@ -320,7 +320,7 @@ const API_URL = "https://script.google.com/macros/s/AKfycbypULzMDnf57uUe9xHHNVTd
         const colors = ["#ff5c00", "#ff00dc", "#0000FF", "#ed0057", "#9d03fc"];
         document.body.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
         
-        document.getElementById("lastUpdated").innerText = new Date().toISOString().split("T")[0];
+        document.getElementById("lastUpdated").innerText = new Date().toLocaleString();
 
 
 document.getElementById("toggleTerms").addEventListener("click", () => {
