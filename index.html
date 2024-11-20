@@ -614,9 +614,12 @@ document.getElementById("submitBtn").addEventListener("click", () => {
         "wtf dude": ":0 - REJECTED, give me a real secret.",
         "bro": "Bro, tell me a secret.",
         "sis": "Sis, I need a secret.",
+        "why should i": "You already went through the effort of getting to this point, why not?",
+        "why should i?": "You already went through the effort of getting to this point, why not?",
         "i know": "What do you know? tell me..",
         "wait what": "Don't act confused. Secret, please. <3",
         "who dat": "It's me, your trustworthy secret-keeper!",
+        "ur mom": "MY MOM!",
         "lolol": "GET SERIOUS. Tell me a secret.",
         "real secret": "dont get smart w me, real secrets only (unless you restate that in a way I haven't predicted)",
         "real secrets": "dont get smart w me, real secrets only (unless you restate that in a way I haven't predicted)",
@@ -680,7 +683,29 @@ document.getElementById("submitBtn").addEventListener("click", () => {
     };
 
     // General restricted terms list
-    const restrictedTerms = ["a","b","c","d","e","f","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",];
+    const restrictedTerms = ["a", "aa", "aaa", "aaaa", "aaaaa",
+"b", "bb", "bbb", "bbbb", "bbbbb",
+"c", "cc", "ccc", "cccc", "ccccc",
+"d", "dd", "ddd", "dddd", "ddddd",
+"e", "ee", "eee", "eeee", "eeeee",
+"f", "ff", "fff", "ffff", "fffff",
+"j", "jj", "jjj", "jjjj", "jjjjj",
+"k", "kk", "kkk", "kkkk", "kkkkk",
+"l", "ll", "lll", "llll", "lllll",
+"m", "mm", "mmm", "mmmm", "mmmmm",
+"n", "nn", "nnn", "nnnn", "nnnnn",
+"o", "oo", "ooo", "oooo", "ooooo",
+"p", "pp", "ppp", "pppp", "ppppp",
+"q", "qq", "qqq", "qqqq", "qqqqq",
+"r", "rr", "rrr", "rrrr", "rrrrr",
+"s", "ss", "sss", "ssss", "sssss",
+"t", "tt", "ttt", "tttt", "ttttt",
+"u", "uu", "uuu", "uuuu", "uuuuu",
+"v", "vv", "vvv", "vvvv", "vvvvv",
+"w", "ww", "www", "wwww", "wwwww",
+"x", "xx", "xxx", "xxxx", "xxxxx",
+"y", "yy", "yyy", "yyyy", "yyyyy",
+"z", "zz", "zzz", "zzzz", "zzzzz"];
 
     // Check for custom responses or restricted terms
     if (customResponses[secret]) {
