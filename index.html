@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submit Your Secret</title>
 
     <link rel="icon" href="favicon.png" type="image/x-icon"> <!-- Replace with the path to your favicon file -->
@@ -32,6 +33,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow-y: auto;
     background-color: #0000ff; /* Opaque background matching the website */
     visibility: hidden;
     opacity: 0;
@@ -49,6 +51,8 @@
   text-align: left;
   color: white;
   max-width: 90%;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
   padding: 20px;
   line-height: 1.6;
   box-sizing: border-box;
@@ -130,50 +134,32 @@ input::placeholder {
   color: white;
 }
 
-/* Mobile Styles */
-@media (max-width: 600px) {
-  body {
-    height: auto;
-    overflow-y: auto;
-    padding: 20px;
-  }
+/* General responsive adjustments for small screens */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px; /* Smaller font size for better readability */
+        overflow-y: auto; /* Ensure proper scrolling behavior */
+        padding: 10px; /* Add padding for better spacing */
+    }
 
-  #modalContent {
-    max-width: 100%;
-    padding: 15px;
-    font-size: 14px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: auto;
-  }
+    button, input[type="submit"] {
+        max-width: 100%; /* Buttons adjust to screen width */
+        font-size: 16px; /* Improve touch target readability */
+        padding: 12px 10px;
+    }
 
-  button,
-  input[type="text"] {
-    max-width: 100%;
-    font-size: 14px;
-    padding: 10px;
-  }
+    .modal {
+        max-width: 90%; /* Fit modal within screen bounds */
+        padding: 15px;
+        border-radius: 8px; /* Rounded corners for better appearance */
+    }
 
-  .checkbox-container {
-    gap: 5px;
-  }
-
-  #terms {
-    max-height: 150px;
-    text-align: left;
-  }
-
-  h2 {
-    font-size: 1.5em;
-  }
-
-  p,
-  h3 {
-    font-size: 1em;
-  }
+    .modal-content {
+        max-height: 80vh; /* Prevent modal overflow on smaller devices */
+        overflow-y: auto;
+    }
 }
+
       </style>
     </head>
     <body>
@@ -739,6 +725,10 @@ document.getElementById("submitBtn").addEventListener("click", () => {
         document.getElementById("response").innerText = "There was an error submitting your secret.";
     });
 });
+
+document.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+        });
 
 
     </script>
