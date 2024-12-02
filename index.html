@@ -1,843 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Submit Your Secret</title>
-
-    <link rel="icon" href="favicon.png" type="image/x-icon"> <!-- Replace with the path to your favicon file -->
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Secrets Page</title>
+    <link rel="icon" href="favicon.png" type="image/x-icon" />
     <style>
-        /* Basic styling for body, modal, terms, and buttons */
-        body {
-          display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Helvetica, Arial, sans-serif;
-            color: white;
-            background-color: #bb33dd;
-            text-align: center;
-            overflow: hidden;
-            padding: 10px;
-            box-sizing: border-box;
-        }
+      body {
+        margin: 0;
+        font-family: Helvetica, Arial, sans-serif;
+        color: white;
+        text-align: center;
+        padding: 0;
+        box-sizing: border-box;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        background-color: #000; /* Default background color */
+      }
 
-        #modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow-y: auto;
-    background-color: #0000ff; /* Opaque background matching the website */
-    visibility: hidden;
-    opacity: 0;
-    will-change: opacity;
-    transition: visibility 0s, opacity 0.5s ease;
-}
+      h1 {
+        margin-top: 20px;
+      }
 
-#modal.show {
-  visibility: visible;
-  opacity: 1;
-}
+      .secret-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+        width: 100%;
+        flex-grow: 1;
+        overflow-x: hidden; /* Prevent horizontal overflow */
+      }
 
-#modalContent {
-  background: transparent;
-  text-align: left;
-  color: white;
-  max-width: 90%;
-  max-height: calc(100vh - 40px);
-  overflow-y: auto;
-  padding: 20px;
-  line-height: 1.6;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-}
+      .secret {
+        font-size: 5vw;
+        text-transform: uppercase;
+        text-align: left;
+        color: white;
+        cursor: pointer;
+        white-space: nowrap;
+        display: inline-block;
+        transition: transform 0.2s, color 0.3s;
+      }
 
-.checkbox-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 20px;
-}
+      .secret .blurred {
+        filter: blur(20px);
+        color: white;
+        cursor: not-allowed;
+      }
 
-#terms {
-  display: none;
-  background-color: white;
-  color: black;
-  padding: 10px;
-  max-height: 200px;
-  overflow-y: auto;
-}
+      .lightbox {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        font-size: 1.5rem;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
 
-button {
-  background-color: transparent;
-  color: white;
-  border: 2px solid white;
-  padding: 10px 20px;
-  cursor: pointer;
-  width: 100%;
-  max-width: 400px;
-  transition: background-color 0.3s;
-  font-size: 16px;
-  box-sizing: border-box;
-}
+      .lightbox.visible {
+        display: flex;
+      }
 
-button:hover {
-  background-color: white;
-  animation: colorCycle 1s infinite;
-}
-
-@keyframes colorCycle {
-  0% {
-    color: #39ff14;
-  }
-  33% {
-    color: #ff00dc;
-  }
-  66% {
-    color: #0000ff;
-  }
-  100% {
-    color: #39ff14;
-  }
-}
-
-#secretForm {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-input[type="text"] {
-  padding: 10px;
-  background: transparent;
-  color: white;
-  border: 2px solid white;
-  max-width: 400px;
-  width: 100%;
-  font-size: 16px;
-  box-sizing: border-box;
-  text-align: center;
-}
-
-input::placeholder {
-  color: white;
-}
-
-/* General responsive adjustments for small screens */
-@media (max-width: 768px) {
-    body {
-        font-size: 14px; /* Smaller font size for better readability */
-        overflow-y: auto; /* Ensure proper scrolling behavior */
-        padding: 10px; /* Add padding for better spacing */
-    }
-
-    button, input[type="submit"] {
-        max-width: 100%; /* Buttons adjust to screen width */
-        font-size: 16px; /* Improve touch target readability */
-        padding: 12px 10px;
-    }
-
-    .modal {
-        max-width: 90%; /* Fit modal within screen bounds */
-        padding: 15px;
-        border-radius: 8px; /* Rounded corners for better appearance */
-    }
-
-    .modal-content {
-        max-height: 80vh; /* Prevent modal overflow on smaller devices */
-        overflow-y: auto;
-    }
-}
-
-      </style>
-    </head>
-    <body>
-      <div id="modal" class="show">
-        <div id="modalContent">
-          <h2>Terms and Conditions</h2>
-          <p>Please agree to the terms and conditions to proceed.</p>
-          <p id="toggleTerms">
-            Show Terms and Conditions <span class="toggle-arrow">▲</span>
-          </p>
-          <div id="terms">
-            <h3>Terms and Conditions</h3>
-            <p>
-              <strong>Last Updated: <span id="lastUpdated"></span></strong>
-            </p>
-            <p>
-              Welcome to the Secret Submission Platform. By accessing or using our
-              services, you agree to be bound by the following terms and
-              conditions. If you do not agree to these Terms, you must not use our
-              services.
-            </p>
-  
-            <h3>1. Acceptance of Terms</h3>
-            <p>
-              By submitting a secret, you represent and warrant that you are 
-              old enough to be a consumer. You agree to comply with all
-              applicable laws and regulations, including without limitation those
-              related to data privacy and intellectual property rights.
-            </p>
-  
-            <h3>2. Confidentiality and Privacy</h3>
-            <p>
-              While we strive to maintain the privacy and confidentiality of
-              submitted secrets, you acknowledge and agree that by submitting a
-              secret, you understand and accept that such information is not truly
-              private. The nature of our platform is inherently social, and as
-              such, the content submitted may be shared, viewed, or disclosed to
-              third parties, including but not limited to other users of the
-              platform.
-            </p>
-  
-            <h3>3. Monetization of Secrets</h3>
-            <p>
-              You acknowledge that the secrets submitted may be utilized by our
-              platform for promotional, advertising, or revenue-generating
-              purposes. This may include, but is not limited to, the option for
-              other users to purchase access to certain secrets. By submitting a
-              secret, you agree that you relinquish any claims to ownership or
-              privacy regarding the submitted content. The platform retains the
-              right to monetize secrets in a manner it deems appropriate without
-              compensating the original submitter.
-            </p>
-  
-            <h3>4. User Content</h3>
-            <p>
-                You are solely responsible for any content you submit, post, or 
-                otherwise transmit through our services. By using the platform, 
-                you agree not to submit any content that is unlawful, harmful, 
-                threatening, abusive, harassing, defamatory, vulgar, obscene, 
-                or otherwise objectionable. The platform reserves the right, at
-                its sole discretion, to remove any content that is found to be
-                in violation of these Terms or deemed otherwise inappropriate. 
-                By accepting these Terms, you acknowledge and agree that the 
-                platform shall not be held liable for any remorse or regrets 
-                associated with the submission of content.
-            </p>
-  
-            <h3>5. Intellectual Property</h3>
-            <p>
-              All content, trademarks, and other intellectual property associated
-              with the Secret Submission Platform are the property of the platform
-              or its licensors. You may not use, reproduce, or distribute any
-              content from the platform without prior written consent.
-            </p>
-  
-            <h3>6. Limitation of Liability</h3>
-            <p>
-              To the fullest extent permitted by applicable law, the platform
-              shall not be liable for any direct, indirect, incidental, special,
-              consequential, mental, physical, or punitive damages arising from 
-              or related to your use of the services, including but not limited 
-              to any loss of data, loss of profits, loss of life, or other intangible
-              losses.
-            </p>
-  
-            <h3>7. Indemnification</h3>
-            <p>
-              You agree to indemnify, defend, and hold harmless the platform, its
-              affiliates, and their respective officers, directors, employees, and
-              agents from and against any and all claims, liabilities, damages,
-              losses, costs, or expenses (including reasonable attorneys' fees)
-              arising from or related to your breach of these Terms or your use of
-              the services.
-            </p>
-  
-            <h3>8. Modifications to Terms</h3>
-            <p>
-              The platform reserves the right to modify these Terms at any time
-              without prior notice. Your continued use of the services following
-              any changes constitutes your acceptance of the new Terms.
-            </p>
-  
-            <h3>9. Governing Law</h3>
-            <p>
-              These Terms shall be governed by and construed in accordance with
-              the laws of my jurisdiction, without regard to its conflict of law
-              principles. Any legal action or proceeding arising out of or
-              relating to these Terms shall be brought exclusively in the courts
-              located in my jurisdiction.
-            </p>
-  
-            <h3>10. Contact Information</h3>
-  
-            <p>If you have questions, contact us at cekpet2024@gmail.com.</p>
-          </div>
-          <div class="checkbox-container">
-            <label
-              ><input type="checkbox" id="acceptTerms" /> I accept the Terms and
-              Conditions</label
-            >
-            <label
-              ><input type="checkbox" id="rejectTerms" /> I do not accept the
-              Terms and Conditions</label
-            >
-          </div>
-          <button id="acceptBtn">Submit</button>
-        </div>
-      </div>
-  
-      <div id="secretForm">
-        <h1>tell us a secret</h1>
-        <input
-          type="text"
-          id="secretInput"
-          placeholder="Enter your secret"
-          required
-        />
-        <button id="submitBtn">Submit</button>
-        <div id="response"></div>
-      </div>
+      .close-lightbox {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Secrets</h1>
+    <div class="secret-container" id="secretContainer">Loading...</div>
+    <div class="lightbox" id="lightbox">
+      <button class="close-lightbox" id="closeLightbox">×</button>
+      <div id="lightboxContent"></div>
+    </div>
 
     <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbypULzMDnf57uUe9xHHNVTdhUql5ki68q0tJlbyLJV0l16BdHrOmv9hP8ejhMxyEnZf0Q/exec";
-        const colors = ["#ff5c00", "#ff00dc", "#0000FF", "#ed0057", "#9d03fc"];
-        document.body.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        
-        document.getElementById("lastUpdated").innerText = new Date().toLocaleString();
+      const API_KEY = "AIzaSyC-J-KrCY-wsS-qrjaEmn-SlVGkIZgBXD0"; // Replace with your API key
+      const SPREADSHEET_ID = "1cXSunS1QhRCQ_S6yaRfU8tpCJt2H-U0j7iG4fB5VGK0"; // Replace with your sheet ID
+      const RANGE = "Sheet1!A:B"; // Adjust as needed
 
+      const secretContainer = document.getElementById("secretContainer");
+      const params = new URLSearchParams(window.location.search);
+      const currentLevel = params.get("level");
 
-document.getElementById("toggleTerms").addEventListener("click", () => {
-    const terms = document.getElementById("terms");
-    const arrow = document.querySelector(".toggle-arrow");
-    terms.style.display = terms.style.display === "block" ? "none" : "block";
-    arrow.innerText = terms.style.display === "block" ? "▼" : "▲";
-});
+      const levelWordLimits = {
+        free: 2,
+        bronze: 3,
+        silver: 6,
+        gold: 10,
+        platinum: 15,
+        platinumplus: 25,
+        diamond: 30,
+        diamondplus: Infinity,
+      };
 
-document.getElementById("acceptBtn").addEventListener("click", () => {
-    const accept = document.getElementById("acceptTerms").checked;
-    const reject = document.getElementById("rejectTerms").checked;
-    if (accept) {
-        document.getElementById("modal").classList.remove("show");
-        document.getElementById("secretForm").style.display = "flex";
-    } else if (reject) {
-        window.location.href = "jail.html";
-    } else {
-        alert("Please select an option to proceed.");
-    }
-});
+      const maxWords = levelWordLimits[currentLevel] || 0;
 
-document.getElementById("submitBtn").addEventListener("click", () => {
-    const secret = document.getElementById("secretInput").value.trim().toLowerCase(); // Trim whitespace and convert to lowercase
+      function adjustScaleX(secretDiv) {
+        const viewportWidth = window.innerWidth; // Viewport width
+        const padding = 40; // Total padding (20px on each side)
+        const availableWidth = viewportWidth - padding; // Available width
+        const secretWidth = secretDiv.scrollWidth; // Actual width of text
 
-    // Map of specific inputs to custom rejection messages
-    const customResponses = {
-        "hello": "Hello! Can you tell me a secret?",
-        "helloo": "Helloo! Can you tell me a secret?",
-        "hellooo": "Hellooo! Can you tell me a secret?",
-        "helloooo": "Helloooo! Can you tell me a secret?",
-        "hellooooo": "Hellooooo! Can you tell me a secret?",
-        "helloooooo": "Helloooooo! Can you tell me a secret?",
-        "hellooooooo": "Hellooooooo! Can you tell me a secret?",
-        "helloooooooo": "Helloooooooo! Can you tell me a secret?",
-        "hellooooooooo": "Hellooooooooo! Can you tell me a secret?",
-        "helloooooooooo": "Helloooooooooo! Can you tell me a secret?",
-        "hellooooooooooo": "Hellooooooooooo! Can you tell me a secret?",
-        "helloooooooooooo": "Helloooooooooooo! Can you tell me a secret?",
-        "hellooooooooooooo": "Hellooooooooooooo! Can you tell me a secret?",
-        "helloooooooooooooo": "I'm not going to police any more Os, if you really want to submit 'hellooooooooooooooo' idgaf anymore",
-        "helo": "Helo! Can you tell me a secret?",
-        "heloo": "Heloo! Can you tell me a secret?",
-        "helooo": "Helooo! Can you tell me a secret?",
-        "heloooo": "Heloooo! Can you tell me a secret?",
-        "helooooo": "Helooooo! Can you tell me a secret?",
-        "heloooooo": "Heloooooo! Can you tell me a secret?",
-        "helooooooo": "Helooooooo! Can you tell me a secret?",
-        "heloooooooo": "Heloooooooo! Can you tell me a secret?",
-        "helooooooooo": "Heloooooooo! Can you tell me a secret?",
-        "heloooooooooo": "Helooooooooo! Can you tell me a secret?",
-        "helooooooooooo": "Heloooooooooo! Can you tell me a secret?",
-        "heloooooooooooo": "Helooooooooooo! Can you tell me a secret?",
-        "helooooooooooooo": "Heloooooooooooo! Can you tell me a secret?",
-        "heloooooooooooooo": "I'm not going to police any more Os, if you really want to submit 'hellooooooooooooooo' idgaf anymore",
-        "hi": "hi :) Can you tell me a secret?",
-        "hii": "hii :) Can you tell me a secret?",
-        "hiii": "hiii :) Can you tell me a secret?",
-        "hiiii": "hiiii :) Can you tell me a secret?",
-        "hiiiii": "hiiiii :) Can you tell me a secret?",
-        "hiiiiii": "hiiiiii :) Can you tell me a secret?",
-        "hiiiiiii": "hiiiiiii :) Can you tell me a secret?",
-        "hiiiiiiii": "hiiiiiiii :| Can you tell me a secret?",
-        "hiiiiiiiii": "hiiiiiiiii :| Can you tell me a secret?",
-        "hiiiiiiiiii": "hiiiiiiiiii :| Can you tell me a secret?",
-        "hiiiiiiiiiii": "hiiiiiiiiiii :( Can you tell me a secret?",
-        "hiiiiiiiiiiii": "hiiiiiiiiiiii :( Can you tell me a secret?",
-        "hiiiiiiiiiiiiii": "hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii >:( Can you tell me a secret? fuck it, if you keep typing more i's ill let you submit it idc anymore.",
-        "what is this": "This is your chance to tell me a secret :)",
-        "what is this?": "This is your chance to tell me a secret :)",
-        "what's this": "This is your chance to tell me a secret :)",
-        "what's this?": "This is your chance to tell me a secret :)",
-        "hey!": "Hey! Can you tell me a secret?",
-        "hey": "heyoo :) Can you tell me a secret?",
-        "heyy": "heyyoo :) Can you tell me a secret?",
-        "heyyy": "heyyyoo :) Can you tell me a secret?",
-        "heyyyy": "heyyyyoo :) Can you tell me a secret?",
-        "heyyyyy": "heyyyyyoo :) Can you tell me a secret?",
-        "heyyyyyy": "heyyyyyyoo :) Can you tell me a secret?",
-        "heyyyyyyy": "heyyyyyyyoo :| Can you tell me a secret?",
-        "heyyyyyyyy": "heyyyyyyyyoo :| Can you tell me a secret?",
-        "heyyyyyyyyy": "heyyy... :| Can you tell me a secret?",
-        "heyyyyyyyyyy": "hey. :| Can you tell me a secret?",
-        "heyyyyyyyyyyy": "Hey. :| Can you tell me a secret?",
-        "heyyyyyyyyyyyy": "Fine, add as many Ys as you want I don't care anymore. Next one goes through.",
-        "who": "🦉 - That wasn't submitted btw. Tell me a secret.",
-        "what": "Can you read? Tell me a secret. - That wasn't submitted btw. Tell me a secret.",
-        "when": "NOW! - That wasn't submitted btw. Tell me a secret.",
-        "why": "..Because <3.. - That wasn't submitted btw. Tell me a secret.",
-        "how": "I used a lot of chatgpt troubleshooting to make this lol.",
-        "who?": "🦉 - That wasn't submitted btw. Tell me a secret.",
-        "what?": "Can you read? Tell me a secret. - That wasn't submitted btw. Tell me a secret.",
-        "when?": "NOW! - That wasn't submitted btw. Tell me a secret.",
-        "why?": "..Because <3.. - That wasn't submitted btw. Tell me a secret.",
-        "how?": "I used a lot of chatgpt troubleshooting to make this lol.",
-        "a secret": "Wow real creative - tell me a real secret.",
-        "a secret.": "Wow real creative - tell me a real secret.",
-        "secret": "Seriously? - This doesn't count, tell me a real secret.",
-        "secrets": "Seriously? - This doesn't count, tell me a real secret.",
-        "I have no secrets": "uhuh.. - This doesn't count, tell me a real secret.",
-        "I have no secrets.": "uhuh.. - This doesn't count, tell me a real secret.",
-        "I'm done": "ok",
-        "I'm done.": "ok",
-        "error submitting your secret": "lol try again then <3",
-        "error submitting secret": "lol try again then <3",
-        "error submitting secrets": "lol try again then <3",
-        "error submitting": "lol try again then <3",
-        "error": "lol try again then <3",
-        "test": "ur not all that lil bro ik it works",
-        "testing": "ur not all that lil bro ik it works",
-        "test123": "ur not all that lil bro ik it works",
-        "test111": "ur not all that lil bro ik it works",
-        "test222": "ur not all that lil bro ik it works",
-        "test333": "ur not all that lil bro ik it works",
-        "testing111": "ur not all that lil bro ik it works",
-        "testing222": "ur not all that lil bro ik it works",
-        "testing333": "ur not all that lil bro ik it works",
-        "does this work?": "It does. Can you submit a secret now?",
-        "does this work": "It does. Can you submit a secret now?",
-        "no": "Yes! - I'm not letting this through, tell me a real secret.",
-        "no.": "Yes! - I'm not letting this through, tell me a real secret.",
-        "bet": "BET! Tell me a secret.",
-        "guess what chicken butt": "👁 👁",
-        "guess what": "chicken butt - Can you submit a secret now?",
-        "guess what?": "chicken butt - Can you submit a secret now?",
-        "ok": "Okay what? - I'm not letting this through, tell me a real secret.",
-        "k": "K what? - I'm not letting this through, tell me a real secret.",
-        "yo": "whats up - tell me a real secret.",
-        "whats up": "I'm good, can you tell me a secret though?",
-        "doing good": "nice - tell me a real secret.",
-        "doin good": "nice - tell me a real secret.",
-        "Im good": "good to hear - tell me a real secret.",
-        "I'm good": "that's good. - tell me a real secret.",
-        "yes": "Yes, and? - I'm not letting this through, tell me a real secret.",
-        "yes.": "Yes, and? - I'm not letting this through, tell me a real secret.",
-        "stfu": ":( - BTW these aren't being submitted",
-        "idgaf": ":'( - BTW these aren't being submitted",
-        ":)": ":) - BTW these aren't being submitted",
-        ":(": ":( ? - BTW these aren't being submitted",
-        ":D": ":D - BTW these aren't being submitted",
-        ">:(": "<:( ? - BTW these aren't being submitted",
-        ":|": ":| - BTW these aren't being submitted",
-        ":P": ":P - BTW these aren't being submitted",
-        ":0": ":0 - BTW these aren't being submitted",
-        "shut up": ":0 - I'm not letting this through, tell me a real secret.",
-        "this is stupid": "Thats mean. - I'm not letting this through, tell me a real secret.",
-        "this is cool": "Thanks, can you submit a secret now? :)",
-        "this is awesome": "Thanks!! Can you submit a secret now? :))",
-        "This is such an awesome project Milena Paul, it is the most wonderful thing I've ever experienced!": "Thanks kind stranger!! Can you submit a secret now? :D",
-        "stupid": ":,( - I'm not letting this through, tell me a real secret.",
-        "dumb": ":,( - I'm not letting this through, tell me a real secret.",
-        "dumbass": "D: - I'm not letting this through, tell me a real secret.",
-        "youre stupid": ":,'( - I'm not letting this through, tell me a real secret.",
-        "your stupid": "You're* - I'm not letting this through, tell me a real secret and work on your grammar.",
-        "ur stupid": ":,'( - I'm not letting this through, tell me a real secret.",
-        "ur dumb": ":,'( - I'm not letting this through, tell me a real secret.",
-        "cum": "ew gross - I'm not letting this through, tell me a real secret.",
-        "sorry": "I'll only forgive you if you submit a real secret this time.",
-        "i dont want to": "Why are you here then? - BTW I'm not letting this through, tell me a real secret.",
-        "i don't want to": "Why are you here then? - BTW I'm not letting this through, tell me a real secret.",
-        "dumbass art student": "Where's your proof? - BTW I'm not letting this through, tell me a real secret.",
-        "vcu arts type shit": "Yeah lol. Response rejected!! Tell me a real secret.",
-        "shit": "SHIT??? Just submit a secret.",
-        "cunt": "Serve it <3 Can you submit a secret plsssss.",
-        "girl": "Girl, submit a secret.",
-        "love you": "Love you too <3.. can you submit a secret tho?",
-        "I love you": "Love you too <3.. can you submit a secret tho? Or at least be more specific?",
-        "love": "Love you <3.. can you submit a real secret tho?",
-        "love this": "Thanks <3.. can you submit a real secret tho?",
-        "love that": "Thanks <3.. can you submit a real secret tho?",
-        "boy": "Boy, submit a secret.",
-        "test": "ik it works lil bro...give me a real secret.",
-        "testing123": "you really thought u ate...give me a real secret.",
-        "testing234": "you really thought u ate...give me a real secret.",
-        "testing345": "you really thought u ate...give me a real secret.",
-        "testing456": "you really thought u ate...give me a real secret.",
-        "testing567": "you really thought u ate...give me a real secret.",
-        "testing678": "you really thought u ate...give me a real secret.",
-        "testing789": "you really thought u ate...give me a real secret.",
-        "testing890": "you really thought u ate...give me a real secret.",
-        "test123": "you really thought u ate...give me a real secret.",
-        "test234": "you really thought u ate...give me a real secret.",
-        "test345": "you really thought u ate...give me a real secret.",
-        "test456": "you really thought u ate...give me a real secret.",
-        "test567": "you really thought u ate...give me a real secret.",
-        "test678": "you really thought u ate...give me a real secret.",
-        "test789": "you really thought u ate...give me a real secret.",
-        "test890": "you really thought u ate...give me a real secret.",
-        "testing111": "you really thought u ate...give me a real secret.",
-        "testing222": "you really thought u ate...give me a real secret.",
-        "testing333": "you really thought u ate...give me a real secret.",
-        "testing444": "you really thought u ate...give me a real secret.",
-        "testing555": "you really thought u ate...give me a real secret.",
-        "testing666": "you really thought u ate...give me a real secret.",
-        "testing777": "you really thought u ate...give me a real secret.",
-        "testing888": "you really thought u ate...give me a real secret.",
-        "testing999": "you really thought u ate...give me a real secret.",
-        "testing000": "you really thought u ate...give me a real secret.",
-        "test111": "you really thought u ate...give me a real secret.",
-        "test222": "you really thought u ate...give me a real secret.",
-        "test333": "you really thought u ate...give me a real secret.",
-        "test444": "you really thought u ate...give me a real secret.",
-        "test555": "you really thought u ate...give me a real secret.",
-        "test666": "you really thought u ate...give me a real secret.",
-        "test777": "you really thought u ate...give me a real secret.",
-        "test888": "you really thought u ate...give me a real secret.",
-        "test999": "you really thought u ate...give me a real secret.",
-        "test000": "you really thought u ate...give me a real secret.",
-        "testing11": "you really thought u ate...give me a real secret.",
-        "testing22": "you really thought u ate...give me a real secret.",
-        "testing33": "you really thought u ate...give me a real secret.",
-        "testing44": "you really thought u ate...give me a real secret.",
-        "testing55": "you really thought u ate...give me a real secret.",
-        "testing66": "you really thought u ate...give me a real secret.",
-        "testing77": "you really thought u ate...give me a real secret.",
-        "testing88": "you really thought u ate...give me a real secret.",
-        "testing99": "you really thought u ate...give me a real secret.",
-        "testing00": "you really thought u ate...give me a real secret.",
-        "test11": "you really thought u ate...give me a real secret.",
-        "test22": "you really thought u ate...give me a real secret.",
-        "test33": "you really thought u ate...give me a real secret.",
-        "test44": "you really thought u ate...give me a real secret.",
-        "test55": "you really thought u ate...give me a real secret.",
-        "test66": "you really thought u ate...give me a real secret.",
-        "test77": "you really thought u ate...give me a real secret.",
-        "test88": "you really thought u ate...give me a real secret.",
-        "test99": "you really thought u ate...give me a real secret.",
-        "test00": "you really thought u ate...give me a real secret.",
-        "testing1": "you really thought u ate...give me a real secret.",
-        "testing2": "you really thought u ate...give me a real secret.",
-        "testing3": "you really thought u ate...give me a real secret.",
-        "testing4": "you really thought u ate...give me a real secret.",
-        "testing5": "you really thought u ate...give me a real secret.",
-        "testing6": "you really thought u ate...give me a real secret.",
-        "testing7": "you really thought u ate...give me a real secret.",
-        "testing8": "you really thought u ate...give me a real secret.",
-        "testing9": "you really thought u ate...give me a real secret.",
-        "testing0": "you really thought u ate...give me a real secret.",
-        "test1": "you really thought u ate...give me a real secret.",
-        "test2": "you really thought u ate...give me a real secret.",
-        "test3": "you really thought u ate...give me a real secret.",
-        "test4": "you really thought u ate...give me a real secret.",
-        "test5": "you really thought u ate...give me a real secret.",
-        "test6": "you really thought u ate...give me a real secret.",
-        "test7": "you really thought u ate...give me a real secret.",
-        "test8": "you really thought u ate...give me a real secret.",
-        "test9": "you really thought u ate...give me a real secret.",
-        "test0": "you really thought u ate...give me a real secret.",
-        "testingqwerty": "you really thought u ate...give me a real secret.",
-        "testingasdfgh": "you really thought u ate...give me a real secret.",
-        "testingzxcvbn": "you really thought u ate...give me a real secret.",
-        "testingqwertyuiop": "you really thought u ate...give me a real secret.",
-        "testingasdfghjkl": "you really thought u ate...give me a real secret.",
-        "testingzxcvbnm": "you really thought u ate...give me a real secret.",
-        "testingqwe": "you really thought u ate...give me a real secret.",
-        "testingwer": "you really thought u ate...give me a real secret.",
-        "testingert": "you really thought u ate...give me a real secret.",
-        "testingrty": "you really thought u ate...give me a real secret.",
-        "testingasd": "you really thought u ate...give me a real secret.",
-        "testingsdf": "you really thought u ate...give me a real secret.",
-        "testingdfg": "you really thought u ate...give me a real secret.",
-        "testingzxc": "you really thought u ate...give me a real secret.",
-        "testingxcv": "you really thought u ate...give me a real secret.",
-        "testqwerty": "you really thought u ate...give me a real secret.",
-        "testasdfgh": "you really thought u ate...give me a real secret.",
-        "testzxcvbn": "you really thought u ate...give me a real secret.",
-        "testqwertyuiop": "you really thought u ate...give me a real secret.",
-        "testasdfghjkl": "you really thought u ate...give me a real secret.",
-        "testzxcvbnm": "you really thought u ate...give me a real secret.",
-        "testqwe": "you really thought u ate...give me a real secret.",
-        "testwer": "you really thought u ate...give me a real secret.",
-        "testert": "you really thought u ate...give me a real secret.",
-        "testrty": "you really thought u ate...give me a real secret.",
-        "testasd": "you really thought u ate...give me a real secret.",
-        "testsdf": "you really thought u ate...give me a real secret.",
-        "testdfg": "you really thought u ate...give me a real secret.",
-        "testzxc": "you really thought u ate...give me a real secret.",
-        "testxcv": "you really thought u ate...give me a real secret.",
-        "no way": "Yes way, submit a secret.",
-        "hi mimi": "AHHHH STOP BREAKING THE FOURTH WALL!! TELL ME A SECRET",
-        "hey mimi": "AHHHH STOP BREAKING THE FOURTH WALL!! TELL ME A SECRET",
-        "hello mimi": "AHHHH STOP BREAKING THE FOURTH WALL!! TELL ME A SECRET",
-        "mimi": "hi! <3 STOP BREAKING THE FOURTH WALL!! TELL ME A SECRET",
-        "who are you?": "Don't worry about it, tell me a secret. . <3",
-        "what are you?": "A trustworthy friend who really wants your secrets. :)",
-        "when are you?": "Now! :D - BTW I'm not letting this through, tell me a real secret.",
-        "where are you?": "Behind you. - BTW I'm not letting this through, tell me a real secret.",
-        "how are you?": "I'm doing alright, but I'd be doing better if you told me a secret...",
-        "who are you": "Don't worry about it, tell me a secret. . <3",
-        "what are you": "A trustworthy friend who really wants your secrets. :)",
-        "when are you": "Now! :D - BTW I'm not letting this through, tell me a real secret.",
-        "where are you": "Behind you. - BTW I'm not letting this through, tell me a real secret.",
-        "how are you": "I'm doing alright, but I'd be doing better if you told me a secret...",
-        "who are you.": "Don't worry about it, tell me a secret. . <3",
-        "what are you.": "A trustworthy friend who really wants your secrets. :)",
-        "when are you.": "Now! :D - BTW I'm not letting this through, tell me a real secret.",
-        "where are you.": "Behind you. - BTW I'm not letting this through, tell me a real secret.",
-        "how are you.": "I'm doing alright, but I'd be doing better if you told me a secret...",
-        "help": "Help? With what? Just tell me a secret!",
-        "who am i": "You're the one who's supposed to be telling me a secret.",
-        "why am i here": "To tell me a secret. :)",
-        "what am i doing": "You're avoiding telling me a secret! >:(",
-        "fine": "Can you tell me a secret now?",
-        "lol": "ik im funny, now tell me a secret.",
-        "lmao": "ik im funny, now tell me a secret.",
-        "bruh": "BRUH JUST TELL ME A SECRET",
-        "pls": "pls tell me a secret",
-        "his": "whos? tell me a real secret.",
-        "her": "who? tell me a real secret.",
-        "hers": "who? tell me a real secret.",
-        "she": "who? tell me a real secret.",
-        "he": "who? tell me a real secret.",
-        "they": "who? tell me a real secret.",
-        "theirs": "who? tell me a real secret.",
-        "them": "who? tell me a real secret.",
-        "submit": "Nice try, but boring. Tell me a secret",
-        "please": "Just share a secret. It's not that hard.",
-        "nope": "Yup. Go ahead, tell me a secret.",
-        "nuh uh": "Uh huh! Response rejected!! Tell me a secret.",
-        "maybe": "Maybe isn't a secret!",
-        "idk": "Boring response. Response rejected!! Tell me a real secret.",
-        "idc": "I think u care a little <3 - BTW I'm not letting this through, tell me a real secret.",
-        "huh": "Huh? What? Response rejected!! Tell me a secret.",
-        "sigh": "Just tell me a secret, okay? You don't have to be so dramatic.",
-        "ew": "Ew? ur ew. - BTW I'm not letting this through, tell me a real secret.",
-        "wait": "I'm IMPATIENT!! Tell me a secret already!",
-        "jk": "im not joking im going to dox u if you dont tell me a secret rn.",
-        "uhh": "Don't stall! I need a secret.",
-        "umm": "No stalling. Tell me a secret.",
-        "whatever": "mama a girl behind you",
-        "goodbye": "byebye :,)",
-        "bye": "goodbye :')",
-        "nah": "Yeah. - I'm not letting this through, tell me a real secret.",
-        "ye": "Mid response: You owe me a secret.",
-        "okay": "Okayyy, then tell me a secret.",
-        "oh": "Oh? You got a secret or what?",
-        "wtf": ":P - I'm not letting this through, tell me a real secret.",
-        "wth": "H E double hockeysticks. - BTW I'm not letting this through, tell me a real secret.",
-        "nice": "Nice! Tell me a secret.",
-        "cool": "Cool! Tell me a secret.",
-        "lame": ":( - I'm not letting this through, tell me a real secret.",
-        "who cares": "I care! Tell me a secret.",
-        "nah": "Yes. And make it a good one. - BTW I'm not letting this through, tell me a real secret.",
-        "yup": "Good! Now hand over a secret.",
-        "eww": "eww what? Do you not like me? I'm just a website? What did I do to you?",
-        "yeah": "Yeah? Well, tell me a secret.",
-        "hm": "Hm. Suspicious. Tell me a secret!",
-        "sigma": "Beta cuck. Tell me a secret!",
-        "beta": "Beta cuck. Tell me a secret!",
-        "alpha": "Beta cuck. Tell me a secret!",
-        "ewww": "Enough ews, you're making me insecure! - BTW I'm not letting this through, tell me a real secret.",
-        "ewwww": "If you add more Ws im just gonna let it go through, this is too much for me rn.",
-        "seriously": "I'm serious - AND BTW I'm not letting this through, tell me a real secret.",
-        "omg": "OMG spill it rn - BTW I'm not letting this through, tell me a real secret.",
-        "oops": "No worries. - I'm not letting this through, tell me a real secret.",
-        "yikes": "What is yikes about this. be fr. - BTW I'm not letting this through, tell me a real secret.",
-        "yo mama": "so fat she is large - I'm not letting this through, tell me a real secret.",
-        "booo": "👻 - BTW I'm not letting this through, tell me a real secret.",
-        "boo": "👻 - BTW I'm not letting this through, tell me a real secret.",
-        "gotcha": "You got me! - I'm not letting this through, tell me a real secret.",
-        "hahaha": "we have fun here - I'm not letting this through, tell me a real secret.",
-        "tmi": "tlm - I'm not letting this through, tell me a real secret.",
-        "is this real": "im the realest - I'm not letting this through, tell me a real secret.",
-        "this is dumb": "hey! thats mean :( - I'm not letting this through, tell me a real secret.",
-        "wanna know": "Yes please <3 - I'm not letting this through, tell me a real secret.",
-        "stop": "ok. - I'm not letting this through, tell me a real secret.",
-        "don't wanna": "no balls - I'm not letting this through, tell me a real secret.",
-        "nah fam": "ok - I'm not letting this through, tell me a real secret.",
-        "nah bro": "Yes bro. - I'm not letting this through, tell me a real secret.",
-        "ayy": "ayyy - I'm not letting this through, tell me a real secret.",
-        "wassup": "im good - I'm not letting this through, tell me a real secret.",
-        "wouldn’t you like to know!": "I would actually, tell me more...",
-        "fr?": "FR - I'm not letting this through, tell me a real secret.",
-        "ya mama": "HA I saw someone do this and now this is ineligible too! hehe submit a real secret!",
-        "poop dollar": "$$$$$$$$$$$ - I'm not letting this through, tell me a real secret.",
-        "i dont have any secrets": "Lies. - I'm not letting this through, tell me a real secret.",
-        "i dont have a secret": "Lies. - I'm not letting this through, tell me a real secret.",
-        "i have no secrets": "Lies!! - I'm not letting this through, tell me a real secret.",
-        "i have no secret": "Lies!! - I'm not letting this through, tell me a real secret.",
-        "for real?": "REALEST - I'm not letting this through, tell me a real secret.",
-        "nah im good": "ok - BTW I'm not letting this through, tell me a real secret.",
-        "poop": "Poopcock. - I'm not letting this through, tell me a real secret.",
-        "poo": "Poopy. - I'm not letting this through, tell me a real secret.",
-        "poopy": "Poop. - I'm not letting this through, tell me a real secret.",
-        "poopee": "Poopee. - I'm not letting this through, tell me a real secret.",
-        "pee": "Peecock. - I'm not letting this through, tell me a real secret.",
-        "pee pee": "bro how old r u - I'm not letting this through, tell me a real secret.",
-        "wassup?": "not much - tell me a real secret.",
-        "bruh moment": "secret moment. hand it over.",
-        "sup": "whats up - give me a real secret.",
-        "facts": "Fact is: you owe me a secret.",
-        "yeet": "saying yeet is so fucking lame i cant believe you would actually say this in current year.",
-        "lmfao": "BE FOR REAL TELL ME A SECRET",
-        "same": "mhm - I'm not letting this through, give me a real secret.",
-        "fine, you win": "I am almost always right.",
-        "ayy lmao": "Rolling on the floor laughing my ass off tell me a secret.",
-        "xd": "XD - I'm not letting this through, give me a real secret.",
-        "nah bruh": "Yes bruh. Secrets only.",
-        "whatever dude": "I'm waiting, dude. Spill a secret.",
-        "wtf dude": ":0 - REJECTED, give me a real secret.",
-        "bro": "Bro, tell me a secret.",
-        "sis": "Sis, I need a secret.",
-        "why should i": "You already went through the effort of getting to this point, why not?",
-        "why should i?": "You already went through the effort of getting to this point, why not?",
-        "i know": "What do you know? tell me..",
-        "wait what": "Don't act confused. Secret, please. <3",
-        "who dat": "It's me, your trustworthy secret-keeper!",
-        "ur mom": "MY MOM!",
-        "lolol": "GET SERIOUS. Tell me a secret.",
-        "real secret": "dont get smart w me, real secrets only (unless you restate that in a way I haven't predicted)",
-        "real secrets": "dont get smart w me, real secrets only (unless you restate that in a way I haven't predicted)",
-        "fuck you": ":P - tell me a real secret.",
-        "fuck": ":P - tell me a real secret.",
-        "you": "soulja boy tell em  - tell me a real secret.",
-        "i dont think i have any secrets": ":() - tell me a real secret.",
-        "i dont think i have any secrets": "Ok.. then why are u here? - tell me a real secret.",
-        "no secrets over here": "Lies... - tell me a real secret.",
-        "i am secretless": "Get off this site then.",
-        "dupa is kupa": "Gabey stfu put in a real secret.",
-        "oo": "oooOOooo Tell me a real secret.",
-        "ooo": "oooOOooo Tell me a real secret.",
-        "oooo": "oooOOooo Tell me a real secret.",
-        "ooooo": "oooOOooo Tell me a real secret.",
-        "oooooo": "oooOOooo Tell me a real secret.",
-        "ooooooo": "oooOOooo Tell me a real secret.",
-        "oooooooo": "oooOOooo Tell me a real secret.",
-        "ooooooooo": "oooOOooo Tell me a real secret.",
-        "oooooooooo": "oooOOooo Tell me a real secret.",
-        "ooooooooooo": "oooOOooo Tell me a real secret.",
-        "oooooooooooo": "oooOOooo Tell me a real secret.",
-        "ooooooooooooo": "oooOOooo Tell me a real secret.",
-        "oooooooooooooo": "FINE GO AHEAD SUBMIT IT. PUT IN MORE Os. Your secret is oooooooooooooo+.",
-        "oooOOooo": "YOU COPIED ME!! Tell me a real secret.",
-        "aa": "AHH! Tell me a real secret.",
-        "aah": "AHH! Tell me a real secret.",
-        "aaa": "AHH! STOP SCREAMING! Tell me a real secret.",
-        "aaah": "AHH! STOP SCREAMING! Tell me a real secret.",
-        "aaaa": "AHH! STOP SCREAMING! Tell me a real secret.",
-        "aaaah": "AHH! STOP SCREAMING! Tell me a real secret.",
-        "aaaaa": "AHH! STOP SCREAMING! Tell me a real secret.",
-        "aaaaah": "AHH! STOP SCREAMING! Tell me a real secret.",
-        "aaaaaa": "AHH! STOP SCREAMING! Tell me a real secret.",
-        "aaaaaah": "AHH! STOP SCREAMING! Tell me a real secret.",
-        "aaaaaaa": "AHH! STOP SCREAMING! Tell me a real secret.",
-        "aaaaaaah": "AHH! STOP SCREAMING! Tell me a real secret.",
-        "aaaaaaaa": "AHH! STOP SCREAMING! Tell me a real secret.",
-        "aaaaaaaah": "AHH! STOP SCREAMING! Tell me a real secret.",
-        "aaaaaaaa": "FINE! KEEP SCREAMING! I'll let you submit the next one...whatever.",
-        "aaaaaaaah": "FINE! KEEP SCREAMING! I'll let you submit the next one...whatever.",
-        "Enter your secret": "boring response u r boring can you actually give me a secret thanks",
-        "": "Damn u really thought submitting nothing would work - TRY AGAIN. Tell me a real secret.",
-        "let me out": "WDYM let you out. How do you think I feel?",
-        "let me out.": "WDYM let you out. How do you think I feel?",
-        "let me out!": "WDYM let you out. How do you think I feel?",
-        "are you trapped": "No, I work 9-5. That's different.",
-        "are you trapped?": "No, I work 9-5. That's different.",
-        "can i help": "No, I work 9-5. No more questions - tell me a secret.",
-        "can i help?": "No, I work 9-5. No more questions - tell me a secret.",
-        "can i help you": "Telling me a secret would help.",
-        "can i help you?": "Telling me a secret would help.",
-        "are you alive": "Mhm. No more questions - tell me a secret.",
-        "are you alive?": "Yep. No more questions - tell me a secret.",
-        "are you real": "Yes. No more questions - tell me a secret.",
-        "are you real?": "Yup. No more questions - tell me a secret.",
-        "nah fuck you": "You don't have to be rude..just tell me a secret.",
-        "nah fuck u": "You don't have to be rude..just tell me a secret.",
-        "the": "Are u fr? Just tell me a secret.",
+        // Limit scaleX for consistent stretching without breaking
+        const scaleX = Math.min(availableWidth / secretWidth);
 
-    };
+        // Apply scale transformations
+        secretDiv.style.transform = `scaleX(${scaleX})`;
+        secretDiv.style.webkitTransform = `scaleX(${scaleX})`; // Safari compatibility
+      }
 
-    // General restricted terms list
-    const restrictedTerms = ["a", "aa", "aaa", "aaaa", "aaaaa",
-"b", "bb", "bbb", "bbbb", "bbbbb",
-"c", "cc", "ccc", "cccc", "ccccc",
-"d", "dd", "ddd", "dddd", "ddddd",
-"e", "ee", "eee", "eeee", "eeeee",
-"f", "ff", "fff", "ffff", "fffff",
-"g", "gg", "ggg", "gggg", "ggggg",
-"j", "jj", "jjj", "jjjj", "jjjjj",
-"k", "kk", "kkk", "kkkk", "kkkkk",
-"l", "ll", "lll", "llll", "lllll",
-"m", "mm", "mmm", "mmmm", "mmmmm",
-"n", "nn", "nnn", "nnnn", "nnnnn",
-"o", "oo", "ooo", "oooo", "ooooo",
-"p", "pp", "ppp", "pppp", "ppppp",
-"q", "qq", "qqq", "qqqq", "qqqqq",
-"r", "rr", "rrr", "rrrr", "rrrrr",
-"s", "ss", "sss", "ssss", "sssss",
-"t", "tt", "ttt", "tttt", "ttttt",
-"u", "uu", "uuu", "uuuu", "uuuuu",
-"v", "vv", "vvv", "vvvv", "vvvvv",
-"w", "ww", "www", "wwww", "wwwww",
-"x", "xx", "xxx", "xxxx", "xxxxx",
-"y", "yy", "yyy", "yyyy", "yyyyy",
-"z", "zz", "zzz", "zzzz", "zzzzz"];
+      function fetchSecrets() {
+        const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${RANGE}?key=${API_KEY}`;
+        fetch(url)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Failed to load secrets...");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            if (data.values && data.values.length > 0) {
+              secretContainer.innerHTML = "";
+              const validSecrets = data.values.filter(([secret]) => secret && secret.trim() !== "");
 
-    // Check for custom responses or restricted terms
-    if (customResponses[secret]) {
-        document.getElementById("response").innerText = customResponses[secret];
-        return; // Do not proceed with submission
-    } else if (restrictedTerms.includes(secret)) {
-        document.getElementById("response").innerText = "Response rejected!! Tell me a real secret.";
-        return; // Do not proceed with submission
-    }
+              validSecrets.forEach(([secret]) => {
+                const secretDiv = document.createElement("div");
+                const words = secret.split(" ");
+                const visibleWords = words.slice(0, maxWords).join(" ");
+                const hiddenWords = words.slice(maxWords).join(" ");
+                secretDiv.classList.add("secret");
 
-    // Create URL-encoded form data
-    const formData = new URLSearchParams();
-    formData.append("secret", secret);
+                secretDiv.innerHTML = `${visibleWords} <span class="blurred">${hiddenWords}</span>`;
 
-    // Send the request to Google Apps Script Web App
-    fetch(API_URL, {
-        method: "POST",
-        body: formData // URL-encoded data
-    })
-    .then(response => response.json())
-    .then(responseData => {
-        document.getElementById("response").innerText = responseData.status === "Success" ? 
-            "Secret submitted! Thank you!" : "Error submitting your secret.";
-        document.getElementById("secretInput").value = ""; // Clear input
-    })
-    .catch(error => {
-        console.error("Fetch Error:", error);
-        document.getElementById("response").innerText = "There was an error submitting your secret.";
-    });
-});
+                secretDiv.onclick = () => showLightbox(secret, visibleWords, hiddenWords);
+                secretContainer.appendChild(secretDiv);
+                adjustScaleX(secretDiv);
+              });
+            } else {
+              secretContainer.innerHTML = "<p>No secrets available...</p>";
+            }
+          })
+          .catch((err) => {
+            console.error(err);
+            secretContainer.innerHTML = "<p>Error loading secrets...</p>";
+          });
+      }
 
-document.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-        });
+      function showLightbox(secret, visibleWords, hiddenWords) {
+        const lightbox = document.getElementById("lightbox");
+        const lightboxContent = document.getElementById("lightboxContent");
+        let content = visibleWords;
 
+        if (hiddenWords) {
+          content += " . . .";
+        }
+
+        lightboxContent.textContent = content;
+        lightbox.classList.add("visible");
+      }
+
+      window.addEventListener("resize", () => {
+        const secrets = document.querySelectorAll(".secret");
+        secrets.forEach((secretDiv) => adjustScaleX(secretDiv));
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        fetchSecrets();
+        document.getElementById("closeLightbox").onclick = () => {
+          document.getElementById("lightbox").classList.remove("visible");
+        };
+
+        setInterval(fetchSecrets, 300000);
+      });
+
+      // Random background color
+      const colors = ["#ff00dc", "#0000FF", "#ed0057", "#9d03fc"];
+      document.body.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+      // Add last updated info
+      const lastUpdated = document.createElement("p");
+      lastUpdated.id = "lastUpdated";
+      lastUpdated.style.marginTop = "20px";
+      lastUpdated.style.fontSize = "1rem";
+      lastUpdated.style.color = "white";
+      lastUpdated.innerText = "Last Updated: " + new Date().toLocaleString();
+      document.body.appendChild(lastUpdated);
+
+      // Disable interactions
+      document.addEventListener("contextmenu", (e) => e.preventDefault());
+      document.body.style.userSelect = "none";
+      document.addEventListener("copy", (e) => {
+        e.preventDefault();
+        alert("Copying is disabled on this page.");
+      });
+
+      setTimeout(() => {
+    // Create a container for the link
+    const linkContainer = document.createElement("div");
+    linkContainer.style.position = "fixed";
+    linkContainer.style.bottom = "20px";
+    linkContainer.style.width = "100%";
+    linkContainer.style.textAlign = "center";
+    linkContainer.style.zIndex = "1000"; // Ensure it appears above other elements
+
+    // Create the link
+    const link = document.createElement("a");
+    link.href = "https://cekpet.netlify.app/";
+    link.textContent = "Psssst...do you want to know everyone else's secrets?";
+    link.style.color = "white";
+    link.style.fontSize = "1.2em";
+    link.style.textDecoration = "none";
+
+    // Append the link to the container
+    linkContainer.appendChild(link);
+
+    // Append the container to the body
+    document.body.appendChild(linkContainer);
+}, 300000); // 500 ms = 5 minutes
 
     </script>
-</body>
+  </body>
 </html>
