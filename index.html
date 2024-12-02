@@ -301,6 +301,13 @@ input::placeholder {
         <div id="response"></div>
       </div>
 
+      <div id="secret-link" style="display: none; text-align: center; position: fixed; bottom: 20px; width: 100%; z-index: 1000;">
+        <a href="https://mem6epc.netlify.app/" style="color: white; font-size: 1.2em; text-decoration: none;">
+            Psssst...do you want to know everyone else's secrets?
+        </a>
+    </div>
+    
+
     <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbypULzMDnf57uUe9xHHNVTdhUql5ki68q0tJlbyLJV0l16BdHrOmv9hP8ejhMxyEnZf0Q/exec";
         const colors = ["#ff5c00", "#ff00dc", "#0000FF", "#ed0057", "#9d03fc"];
@@ -838,28 +845,10 @@ document.addEventListener('touchstart', function(e) {
         });
 
         setTimeout(() => {
-    // Create a container for the link
-    const linkContainer = document.createElement("div");
-    linkContainer.style.position = "fixed";
-    linkContainer.style.bottom = "20px";
-    linkContainer.style.width = "100%";
-    linkContainer.style.textAlign = "center";
-    linkContainer.style.zIndex = "1000"; // Ensure it appears above other elements
+    const link = document.getElementById("secret-link");
+    link.style.display = "block"; // Make the link visible
+}, 300000); // 300000 ms = 5 minutes
 
-    // Create the link
-    const link = document.createElement("a");
-    link.href = "https://cekpet.netlify.app/";
-    link.textContent = "Psssst...do you want to know everyone else's secrets?";
-    link.style.color = "white";
-    link.style.fontSize = "1.2em";
-    link.style.textDecoration = "none";
-
-    // Append the link to the container
-    linkContainer.appendChild(link);
-
-    // Append the container to the body
-    document.body.appendChild(linkContainer);
-}, 300000); // 500 ms = 5 minutes
 
 
     </script>
