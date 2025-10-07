@@ -970,10 +970,6 @@ document.getElementById("submitBtn").addEventListener("click", () => {
         return; // Do not proceed with submission
     }
 
-    // Disable button and change text
-submitButton.disabled = true;
-submitButton.innerText = "Submitting...";
-
     // Create URL-encoded form data
     const formData = new URLSearchParams();
     formData.append("secret", secret);
