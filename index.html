@@ -177,23 +177,6 @@ input::placeholder {
 
       </style>
     </head>
-    <script>
-        function typeResponse(text) {
-  const response = document.getElementById("response");
-  response.textContent = "";
-  let i = 0;
-
-  function type() {
-    if (i < text.length) {
-      response.textContent += text.charAt(i);
-      i++;
-      setTimeout(type, 25); // typing speed (ms per character)
-    }
-  }
-
-  type();
-}
-    </script>
     <body>
       <div id="modal" class="show">
         <div id="modalContent">
@@ -368,6 +351,21 @@ document.getElementById("acceptBtn").addEventListener("click", () => {
         alert("Please select an option to proceed.");
     }
 });
+                function typeResponse(text) {
+  const response = document.getElementById("response");
+  response.textContent = "";
+  let i = 0;
+
+  function type() {
+    if (i < text.length) {
+      response.textContent += text.charAt(i);
+      i++;
+      setTimeout(type, 25); // typing speed (ms per character)
+    }
+  }
+
+  type();
+}
 
 document.getElementById("submitBtn").addEventListener("click", () => {
     const secret = document.getElementById("secretInput").value.trim().toLowerCase(); // Trim whitespace and convert to lowercase
