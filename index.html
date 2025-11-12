@@ -169,13 +169,31 @@ input::placeholder {
     }
 
     #response {
-  min-height: 1.5em; /* keeps layout height stable even when text changes */
-  max-width: 400px;
+        min-height: 1.5em; /* keeps layout height stable even when text changes */
+        max-width: 400px;
+        white-space: pre-wrap;
 }
 }
 
       </style>
     </head>
+    <script>
+        function typeResponse(text) {
+  const response = document.getElementById("response");
+  response.textContent = "";
+  let i = 0;
+
+  function type() {
+    if (i < text.length) {
+      response.textContent += text.charAt(i);
+      i++;
+      setTimeout(type, 25); // typing speed (ms per character)
+    }
+  }
+
+  type();
+}
+    </script>
     <body>
       <div id="modal" class="show">
         <div id="modalContent">
