@@ -998,10 +998,10 @@ document.getElementById("submitBtn").addEventListener("click", () => {
 
     // Check for custom responses or restricted terms
     if (customResponses[secret]) {
-        document.getElementById("response").typeResponse() = customResponses[secret];
+        document.getElementById("response").innerText = customResponses[secret];
         return; // Do not proceed with submission
     } else if (restrictedTerms.includes(secret)) {
-        document.getElementById("response").typeResponse() = "Response rejected!! Tell me a real secret.";
+        document.getElementById("response").innerText = "Response rejected!! Tell me a real secret.";
         return; // Do not proceed with submission
     }
 
@@ -1016,13 +1016,13 @@ document.getElementById("submitBtn").addEventListener("click", () => {
     })
     .then(response => response.json())
     .then(responseData => {
-        document.getElementById("response").typeResponse() = responseData.status === "Success" ? 
+        document.getElementById("response").innerText = responseData.status === "Success" ? 
             "Secret submitted! Thank you!" : "Error submitting your secret.";
         document.getElementById("secretInput").value = ""; // Clear input
     })
     .catch(error => {
         console.error("Fetch Error:", error);
-        document.getElementById("response").typeResponse() = "There was an error submitting your secret.";
+        document.getElementById("response").innerText = "There was an error submitting your secret.";
     });
 });
 
