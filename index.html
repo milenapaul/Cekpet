@@ -173,6 +173,11 @@ input::placeholder {
         max-width: 400px;
         white-space: pre-wrap;
 }
+
+    button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
 }
 
       </style>
@@ -368,7 +373,16 @@ document.getElementById("acceptBtn").addEventListener("click", () => {
 }
 
 document.getElementById("submitBtn").addEventListener("click", () => {
-    const secret = document.getElementById("secretInput").value.trim().toLowerCase(); // Trim whitespace and convert to lowercase
+    const secretInput = document.getElementById("secretInput");
+    const secret = secretInput.value.trim().toLowerCase();
+    const submitBtn = document.getElementById("submitBtn");
+    const responseEl = document.getElementById("response");
+
+    // Handle empty input
+    if (!secret) {
+        typeResponse("Please enter a secret before submitting!");
+        return;
+    }
 
     // Map of specific inputs to custom rejection messages
     const customResponses = {
@@ -998,31 +1012,39 @@ document.getElementById("submitBtn").addEventListener("click", () => {
 
     // Check for custom responses or restricted terms
     if (customResponses[secret]) {
-        document.getElementById("response").innerText = customResponses[secret];
-        return; // Do not proceed with submission
+        typeResponse(customResponses[secret]);
+        return;
     } else if (restrictedTerms.includes(secret)) {
-        document.getElementById("response").innerText = "Response rejected!! Tell me a real secret.";
-        return; // Do not proceed with submission
+        typeResponse("Response rejected!! Tell me a real secret.");
+        return;
     }
 
-    // Create URL-encoded form data
+    // Show loading state
+    submitBtn.disabled = true;
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = "Submitting...";
+
+    // Prepare form data
     const formData = new URLSearchParams();
     formData.append("secret", secret);
 
-    // Send the request to Google Apps Script Web App
     fetch(API_URL, {
         method: "POST",
-        body: formData // URL-encoded data
+        body: formData
     })
-    .then(response => response.json())
-    .then(responseData => {
-        document.getElementById("response").innerText = responseData.status === "Success" ? 
-            "Secret submitted! Thank you!" : "Error submitting your secret.";
-        document.getElementById("secretInput").value = ""; // Clear input
+    .then(res => res.json())
+    .then(data => {
+        typeResponse(data.status === "Success" ? 
+            "Secret submitted! Thank you!" : "Error submitting your secret.");
+        secretInput.value = "";
     })
-    .catch(error => {
-        console.error("Fetch Error:", error);
-        document.getElementById("response").innerText = "There was an error submitting your secret.";
+    .catch(err => {
+        console.error("Fetch Error:", err);
+        typeResponse("There was an error submitting your secret.");
+    })
+    .finally(() => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
     });
 });
 
