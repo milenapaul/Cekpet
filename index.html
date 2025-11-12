@@ -9,22 +9,22 @@
 
     <style>
         /* Basic styling for body, modal, terms, and buttons */
- body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    font-family: Helvetica, Arial, sans-serif;
-    color: white;
-    background-color: #bb33dd;
-    text-align: center;
-    overflow: hidden;
-    padding: 10px;
-    box-sizing: border-box;
+        body {
+          display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Helvetica, Arial, sans-serif;
+            color: white;
+            background-color: #bb33dd;
+            text-align: center;
+            overflow: hidden;
+            padding: 10px;
+            box-sizing: border-box;
         }
 
-#modal {
+        #modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -96,35 +96,6 @@ button:hover {
   background-color: white;
   animation: colorCycle 1s infinite;
 }
-
-        /* LOAD BUTTON */
-
-.loader {
-    display: none;
-    border: 4px solid rgba(255, 255, 255, 0.3);
-    border-top: 4px solid blue;
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    animation: spin 1s linear infinite;
-    margin-left: 10px;
-}
-
- @keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-.loading {
-    background-color: #ccc;
-    pointer-events: none;
-}
-        /* LOAD BUTTON */
 
 @keyframes colorCycle {
   0% {
@@ -342,9 +313,7 @@ input::placeholder {
           placeholder="Enter your secret"
           required
         />
-        <button id="submitBtn" class="btn">
-            Submit
-        </button>
+        <button id="submitBtn">Submit</button>
         <div id="response"></div>
       </div>
 
@@ -362,33 +331,7 @@ const API_URL = "https://script.google.com/macros/s/AKfycbypULzMDnf57uUe9xHHNVTd
         
         document.getElementById("lastUpdated").innerText = new Date().toLocaleString();
 
-/* LOAD BUTTON */
 
-const loadButton = 
-    document.getElementById('submitBtn');
-const loader = 
-    document.getElementById('loader');
-const demoForm = 
-    document.getElementById('secretForm');
-
-loadButton.addEventListener('click', () => {
-
-    // Disable the button
-    // and prevent further clicks
-    loadButton.disabled = true;
-    loader.style.display = 'inline-block';
-
-    setTimeout(() => {
-    
-        // Restore the button state 
-        //after the operation is done
-        loadButton.disabled = false;
-        loader.style.display = 'none';
-        demoForm.reset();
-    }, 2000);
-             
-/* LOAD BUTTON */
-             
 document.getElementById("toggleTerms").addEventListener("click", () => {
     const terms = document.getElementById("terms");
     const arrow = document.querySelector(".toggle-arrow");
