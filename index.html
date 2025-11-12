@@ -177,154 +177,8 @@ input::placeholder {
 
       </style>
     </head>
-    <body>
-      <div id="modal" class="show">
-        <div id="modalContent">
-          <h2>Terms and Conditions</h2>
-          <p>Please agree to the terms and conditions to proceed.</p>
-          <p id="toggleTerms">
-            Show Terms and Conditions <span class="toggle-arrow">▲</span>
-          </p>
-          <div id="terms">
-            <h3>Terms and Conditions</h3>
-            <p>
-              <strong>Last Updated: <span id="lastUpdated"></span></strong>
-            </p>
-            <p>
-              Welcome to the Secret Submission Platform. By accessing or using our
-              services, you agree to be bound by the following terms and
-              conditions. If you do not agree to these Terms, you must not use our
-              services.
-            </p>
-  
-            <h3>1. Acceptance of Terms</h3>
-            <p>
-              By submitting a secret, you represent and warrant that you are 
-              old enough to be a consumer. You agree to comply with all
-              applicable laws and regulations, including without limitation those
-              related to data privacy and intellectual property rights.
-            </p>
-  
-            <h3>2. Confidentiality and Privacy</h3>
-            <p>
-              While we strive to maintain the privacy and confidentiality of
-              submitted secrets, you acknowledge and agree that by submitting a
-              secret, you understand and accept that such information is not truly
-              private. The nature of our platform is inherently social, and as
-              such, the content submitted may be shared, viewed, or disclosed to
-              third parties, including but not limited to other users of the
-              platform.
-            </p>
-  
-            <h3>3. Monetization of Secrets</h3>
-            <p>
-              You acknowledge that the secrets submitted may be utilized by our
-              platform for promotional, advertising, or revenue-generating
-              purposes. This may include, but is not limited to, the option for
-              other users to purchase access to certain secrets. By submitting a
-              secret, you agree that you relinquish any claims to ownership or
-              privacy regarding the submitted content. The platform retains the
-              right to monetize secrets in a manner it deems appropriate without
-              compensating the original submitter.
-            </p>
-  
-            <h3>4. User Content</h3>
-            <p>
-                You are solely responsible for any content you submit, post, or 
-                otherwise transmit through our services. By using the platform, 
-                you agree not to submit any content that is unlawful, harmful, 
-                threatening, abusive, harassing, defamatory, vulgar, obscene, 
-                or otherwise objectionable. The platform reserves the right, at
-                its sole discretion, to remove any content that is found to be
-                in violation of these Terms or deemed otherwise inappropriate. 
-                By accepting these Terms, you acknowledge and agree that the 
-                platform shall not be held liable for any remorse or regrets 
-                associated with the submission of content.
-            </p>
-  
-            <h3>5. Intellectual Property</h3>
-            <p>
-              All content, trademarks, and other intellectual property associated
-              with the Secret Submission Platform are the property of the platform
-              or its licensors. You may not use, reproduce, or distribute any
-              content from the platform without prior written consent.
-            </p>
-  
-            <h3>6. Limitation of Liability</h3>
-            <p>
-              To the fullest extent permitted by applicable law, the platform
-              shall not be liable for any direct, indirect, incidental, special,
-              consequential, mental, physical, or punitive damages arising from 
-              or related to your use of the services, including but not limited 
-              to any loss of data, loss of profits, loss of life, or other intangible
-              losses.
-            </p>
-  
-            <h3>7. Indemnification</h3>
-            <p>
-              You agree to indemnify, defend, and hold harmless the platform, its
-              affiliates, and their respective officers, directors, employees, and
-              agents from and against any and all claims, liabilities, damages,
-              losses, costs, or expenses (including reasonable attorneys' fees)
-              arising from or related to your breach of these Terms or your use of
-              the services.
-            </p>
-  
-            <h3>8. Modifications to Terms</h3>
-            <p>
-              The platform reserves the right to modify these Terms at any time
-              without prior notice. Your continued use of the services following
-              any changes constitutes your acceptance of the new Terms.
-            </p>
-  
-            <h3>9. Governing Law</h3>
-            <p>
-              These Terms shall be governed by and construed in accordance with
-              the laws of my jurisdiction, without regard to its conflict of law
-              principles. Any legal action or proceeding arising out of or
-              relating to these Terms shall be brought exclusively in the courts
-              located in my jurisdiction.
-            </p>
-  
-            <h3>10. Contact Information</h3>
-  
-            <p>If you have questions, contact us at cekpet2024@gmail.com.</p>
-          </div>
-          <div class="checkbox-container">
-            <label
-              ><input type="checkbox" id="acceptTerms" /> I accept the Terms and
-              Conditions</label
-            >
-            <label
-              ><input type="checkbox" id="rejectTerms" /> I do not accept the
-              Terms and Conditions</label
-            >
-          </div>
-          <button id="acceptBtn">Accept</button>
-        </div>
-      </div>
-  <div class="center-container">
-      <div id="secretForm">
-        <h1>tell us a secret</h1>
-        <input
-          type="text"
-          id="secretInput"
-          placeholder="Enter your secret"
-          required
-        />
-        <button id="submitBtn">Submit</button>
-        <div id="response"></div>
-      </div>
 
-      <div id="secret-link" style="display: none; text-align: center; position: fixed; bottom: 20px; width: 100%; z-index: 1000;">
-        <a href="https://mem6epc.netlify.app/" style="color: white; font-size: 1.2em; text-decoration: none;">
-            Psssst...do you want to know everyone else's secrets?
-        </a>
-    </div>
-  </div>     
-    
-
-    <script>
+ <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbypULzMDnf57uUe9xHHNVTdhUql5ki68q0tJlbyLJV0l16BdHrOmv9hP8ejhMxyEnZf0Q/exec";
         const colors = ["#ff00ff", "#0000FF", "#ff0000", "#9d03fc"];
         document.body.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
@@ -1038,5 +892,151 @@ document.addEventListener('touchstart', function(e) {
 
 
     </script>
+    
+    <body>
+      <div id="modal" class="show">
+        <div id="modalContent">
+          <h2>Terms and Conditions</h2>
+          <p>Please agree to the terms and conditions to proceed.</p>
+          <p id="toggleTerms">
+            Show Terms and Conditions <span class="toggle-arrow">▲</span>
+          </p>
+          <div id="terms">
+            <h3>Terms and Conditions</h3>
+            <p>
+              <strong>Last Updated: <span id="lastUpdated"></span></strong>
+            </p>
+            <p>
+              Welcome to the Secret Submission Platform. By accessing or using our
+              services, you agree to be bound by the following terms and
+              conditions. If you do not agree to these Terms, you must not use our
+              services.
+            </p>
+  
+            <h3>1. Acceptance of Terms</h3>
+            <p>
+              By submitting a secret, you represent and warrant that you are 
+              old enough to be a consumer. You agree to comply with all
+              applicable laws and regulations, including without limitation those
+              related to data privacy and intellectual property rights.
+            </p>
+  
+            <h3>2. Confidentiality and Privacy</h3>
+            <p>
+              While we strive to maintain the privacy and confidentiality of
+              submitted secrets, you acknowledge and agree that by submitting a
+              secret, you understand and accept that such information is not truly
+              private. The nature of our platform is inherently social, and as
+              such, the content submitted may be shared, viewed, or disclosed to
+              third parties, including but not limited to other users of the
+              platform.
+            </p>
+  
+            <h3>3. Monetization of Secrets</h3>
+            <p>
+              You acknowledge that the secrets submitted may be utilized by our
+              platform for promotional, advertising, or revenue-generating
+              purposes. This may include, but is not limited to, the option for
+              other users to purchase access to certain secrets. By submitting a
+              secret, you agree that you relinquish any claims to ownership or
+              privacy regarding the submitted content. The platform retains the
+              right to monetize secrets in a manner it deems appropriate without
+              compensating the original submitter.
+            </p>
+  
+            <h3>4. User Content</h3>
+            <p>
+                You are solely responsible for any content you submit, post, or 
+                otherwise transmit through our services. By using the platform, 
+                you agree not to submit any content that is unlawful, harmful, 
+                threatening, abusive, harassing, defamatory, vulgar, obscene, 
+                or otherwise objectionable. The platform reserves the right, at
+                its sole discretion, to remove any content that is found to be
+                in violation of these Terms or deemed otherwise inappropriate. 
+                By accepting these Terms, you acknowledge and agree that the 
+                platform shall not be held liable for any remorse or regrets 
+                associated with the submission of content.
+            </p>
+  
+            <h3>5. Intellectual Property</h3>
+            <p>
+              All content, trademarks, and other intellectual property associated
+              with the Secret Submission Platform are the property of the platform
+              or its licensors. You may not use, reproduce, or distribute any
+              content from the platform without prior written consent.
+            </p>
+  
+            <h3>6. Limitation of Liability</h3>
+            <p>
+              To the fullest extent permitted by applicable law, the platform
+              shall not be liable for any direct, indirect, incidental, special,
+              consequential, mental, physical, or punitive damages arising from 
+              or related to your use of the services, including but not limited 
+              to any loss of data, loss of profits, loss of life, or other intangible
+              losses.
+            </p>
+  
+            <h3>7. Indemnification</h3>
+            <p>
+              You agree to indemnify, defend, and hold harmless the platform, its
+              affiliates, and their respective officers, directors, employees, and
+              agents from and against any and all claims, liabilities, damages,
+              losses, costs, or expenses (including reasonable attorneys' fees)
+              arising from or related to your breach of these Terms or your use of
+              the services.
+            </p>
+  
+            <h3>8. Modifications to Terms</h3>
+            <p>
+              The platform reserves the right to modify these Terms at any time
+              without prior notice. Your continued use of the services following
+              any changes constitutes your acceptance of the new Terms.
+            </p>
+  
+            <h3>9. Governing Law</h3>
+            <p>
+              These Terms shall be governed by and construed in accordance with
+              the laws of my jurisdiction, without regard to its conflict of law
+              principles. Any legal action or proceeding arising out of or
+              relating to these Terms shall be brought exclusively in the courts
+              located in my jurisdiction.
+            </p>
+  
+            <h3>10. Contact Information</h3>
+  
+            <p>If you have questions, contact us at cekpet2024@gmail.com.</p>
+          </div>
+          <div class="checkbox-container">
+            <label
+              ><input type="checkbox" id="acceptTerms" /> I accept the Terms and
+              Conditions</label
+            >
+            <label
+              ><input type="checkbox" id="rejectTerms" /> I do not accept the
+              Terms and Conditions</label
+            >
+          </div>
+          <button id="acceptBtn">Accept</button>
+        </div>
+      </div>
+  <div class="center-container">
+      <div id="secretForm">
+        <h1>tell us a secret</h1>
+        <input
+          type="text"
+          id="secretInput"
+          placeholder="Enter your secret"
+          required
+        />
+        <button id="submitBtn">Submit</button>
+        <div id="response"></div>
+      </div>
+
+      <div id="secret-link" style="display: none; text-align: center; position: fixed; bottom: 20px; width: 100%; z-index: 1000;">
+        <a href="https://mem6epc.netlify.app/" style="color: white; font-size: 1.2em; text-decoration: none;">
+            Psssst...do you want to know everyone else's secrets?
+        </a>
+    </div>
+  </div>     
 </body>
 </html>
