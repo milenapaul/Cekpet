@@ -372,7 +372,7 @@ document.getElementById("acceptBtn").addEventListener("click", () => {
   type();
 }
 
-document.getElementById("submitBtn").addEventListener("click", () => {
+function handleSubmit() {
     const secretInput = document.getElementById("secretInput");
     const secret = secretInput.value.trim().toLowerCase();
     const submitBtn = document.getElementById("submitBtn");
@@ -1059,7 +1059,9 @@ document.addEventListener('touchstart', function(e) {
     link.style.display = "block"; // Make the link visible
 }, 7000); //7000 ms = 15 sec
 
-
+const submitBtn = document.getElementById("submitBtn");
+submitBtn.addEventListener("click", handleSubmit);
+submitBtn.addEventListener("touchstart", handleSubmit);
 
     </script>
         
